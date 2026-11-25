@@ -18,6 +18,13 @@ html,body{width:360px;height:640px;overflow:hidden;background:var(--bg);color:va
 #g{position:absolute;left:50%;top:0;height:640px;width:426.67px;transform:translateX(-50%)}
 .scrim{position:absolute;left:0;right:0;top:0;height:350px;background:linear-gradient(#f3efe6fa,#f3efe6f2 58%,transparent)}
 .cap{position:absolute;left:28px;right:28px;top:64px;font-size:45px;line-height:1.04;letter-spacing:-.035em}
+/* Instagram cut: text stays in the central band that survives the feed and grid crops */
+.hook{position:absolute;left:28px;right:28px;top:118px;font-size:31px;line-height:1.08;letter-spacing:-.035em;display:none}
+.ig .hook{display:block}
+.ig .lab{top:226px}.ig .ask{top:254px}
+.ig .scrim{display:none}
+.ig .cap{top:150px;left:22px;right:auto;max-width:316px;font-size:40px;background:#f3efe6;padding:14px 18px 16px;border-radius:18px;box-shadow:0 6px 24px rgba(0,0,0,.28)}
+.ig .h{top:120px}.ig .say{bottom:112px}
 /* C */
 .h{position:absolute;left:28px;right:28px;top:78px;font-size:41px;line-height:1.04;letter-spacing:-.035em}
 .bub{position:absolute;right:24px;background:var(--panel);border-radius:20px 20px 5px 20px;padding:13px 18px;font-size:19px;font-weight:600;box-shadow:0 2px 6px rgba(0,0,0,.06),0 0 0 1.5px rgba(27,24,21,.10);opacity:0;transform-origin:100% 100%;white-space:nowrap}
@@ -41,6 +48,7 @@ html,body{width:360px;height:640px;overflow:hidden;background:var(--bg);color:va
 </div>
 
 <div class="sc" id="A">
+  <div class="hook" id="hook">Watch a sentence become a game.</div>
   <div class="lab" id="lab">TYPE WHAT YOU WANT</div>
   <div class="ask" id="ask"><span id="typed"></span><span class="caret" id="caret"></span><div class="ring" id="ring"></div><div class="send" id="send">↑</div></div>
 </div>
@@ -65,6 +73,7 @@ html,body{width:360px;height:640px;overflow:hidden;background:var(--bg);color:va
 
 <script>
 const $ = id => document.getElementById(id);
+const IG = new URLSearchParams(location.search).has('ig'); if (IG) { document.documentElement.classList.add('ig'); }
 const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
 const prog = (t, a, b) => clamp((t - a) / (b - a));
 const ease = p => 1 - Math.pow(1 - p, 3);
@@ -193,6 +202,8 @@ window.seek = t => {
   $('B').style.opacity = showB ? 1 - prog(t, 10.4, 10.7) : showE ? ease(prog(t, 21.3, 21.8)) : 0;
   $('B').querySelector('.scrim').style.opacity = showE ? 0 : ease(prog(t, 4.5, 5.0));
   reveal('cap1', t, 4.9, 7.3); reveal('cap2', t, 7.45, 10.35);
+  $('cap1').style.opacity = showE ? 0 : ease(prog(t, 4.8, 5.05)) * (1 - prog(t, 7.1, 7.35));
+  $('cap2').style.opacity = showE ? 0 : ease(prog(t, 7.4, 7.65)) * (1 - prog(t, 10.1, 10.35));
   if (showE) { words.cap1.forEach(w => w.style.opacity = 0); words.cap2.forEach(w => w.style.opacity = 0); }
 
   // C: ask for anything
@@ -214,5 +225,6 @@ window.seek = t => {
   const u = prog(t, 23.2, 23.65); $('eurl').style.opacity = clamp(u * 2); $('eurl').style.transform = `translateY(${(1 - ease(u)) * 18}px) scale(${0.9 + 0.1 * back(u)})`;
   const f = ease(prog(t, 23.8, 24.3)); $('efree').style.opacity = f;
 };
+if (IG) $('efree').textContent = 'Link in bio. Free to try.';
 window.ready = document.fonts.load('800 20px Inter').then(() => document.fonts.ready).then(() => { seek(0); return { seed: SEED }; });
 </script></body></html>
