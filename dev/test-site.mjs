@@ -30,6 +30,19 @@ try {
   check('step 1 has nothing on screen but the game (fits, no scrolling)', await fits() === 'fits', await fits());
   check('next button is on screen and not yet lit', await ev(`(()=>{const r=document.getElementById('next').getBoundingClientRect();return r.bottom<=innerHeight && r.top>0 && !document.getElementById('next').classList.contains('go')})()`));
   check('game loads in ready state', await ev('window.__game.state') === 'ready');
+  const padBox = id => ev(`(()=>{const r=document.getElementById('${id}').getBoundingClientRect();return {x:r.left+r.width/2,y:r.top+r.height/2,w:r.width,vis:!document.getElementById('${id}').hidden&&r.width>40}})()`);
+  const pl = await padBox('padL'), pr = await padBox('padR');
+  check('steer buttons visible before play (big enough to thumb)', pl.vis && pr.vis && pl.w >= 60, JSON.stringify([pl.w, pr.w]));
+  const tch = async (type, x, y) => send('Input.dispatchTouchEvent', { type, touchPoints: type === 'touchEnd' ? [] : [{ x, y }] });
+  await tch('touchStart', pl.x, pl.y); await sleep(400);
+  const pState = await ev('window.__game.state'), px = await ev('window.__game.truckX');
+  await tch('touchEnd'); await sleep(150);
+  check('holding the left button starts the game and steers left', pState === 'play' && px < 150, `${pState} x=${Math.round(px)}`);
+  const px1 = await ev('window.__game.truckX');
+  await tch('touchStart', pr.x, pr.y); await sleep(500); const px2 = await ev('window.__game.truckX'); await tch('touchEnd'); await sleep(200);
+  const px3 = await ev('window.__game.truckX'); await sleep(250); const px4 = await ev('window.__game.truckX');
+  check('holding the right button steers right, and releasing stops', px2 > px1 + 60 && Math.abs(px4 - px3) < 2, `${Math.round(px1)} -> ${Math.round(px2)}, settle ${Math.round(px3)}/${Math.round(px4)}`);
+  await ev(`(()=>{location.hash='s2';})()`); await sleep(300); await ev(`location.hash='s1'`); await sleep(400);
   const c = await ev(`(()=>{const r=document.getElementById('stage').getBoundingClientRect();return {l:r.left,t:r.top,w:r.width,h:r.height}})()`);
   const touch = async (type, x, y) => send('Input.dispatchTouchEvent', { type, touchPoints: type === 'touchEnd' ? [] : [{ x, y }] });
   await touch('touchStart', c.l + c.w / 2, c.t + c.h / 2); await touch('touchEnd'); await sleep(300);
@@ -46,6 +59,7 @@ try {
   let over = false; for (let i = 0; i < 120 && !over; i++) { await sleep(500); over = await ev('window.__game.state') === 'over'; }
   check('an unsteered truck eventually hits a cow', over, 'score ' + await ev('window.__game.score'));
   await sleep(900); await shot('s1-crashed');
+  check('steer buttons hide on the game-over screen', await ev(`document.getElementById('padL').hidden && document.getElementById('padR').hidden`));
   check('crash screen shows score, and the Next button lights up', await ev(`!document.getElementById('ovOver').hidden && document.getElementById('next').classList.contains('go') && document.getElementById('next').textContent.includes('how was this made')`));
   await ev(`document.getElementById('again').click()`); await sleep(200);
   check('play again restarts', await ev('window.__game.state') === 'play');

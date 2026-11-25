@@ -50,7 +50,10 @@ h1{font-size:clamp(32px,9.5vw,44px);font-weight:800;line-height:1.04;letter-spac
 @keyframes nudge{50%{transform:scale(1.03)}}
 
 /* step 1: game */
-.stage{position:relative;margin:14px auto 0;width:min(100%,calc((100vh - 285px) * 2 / 3));width:min(100%,calc((100svh - 285px) * 2 / 3));aspect-ratio:360/540;border-radius:18px;overflow:hidden;box-shadow:0 0 0 1px rgba(27,24,21,.10),0 18px 44px -16px rgba(60,40,20,.32);touch-action:none;user-select:none;-webkit-user-select:none}
+.pad{position:absolute;bottom:14px;z-index:3;width:68px;height:68px;border-radius:50%;border:0;padding:0;background:rgba(27,24,21,.58);color:#fffdf9;font-size:30px;line-height:1;display:grid;place-items:center;box-shadow:0 0 0 2px rgba(255,253,249,.55);touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent;cursor:pointer}
+.pad.l{left:10px}.pad.r{right:10px}.pad.on{background:rgba(154,85,64,.85)}
+.pad[hidden]{display:none}
+.stage{-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent;position:relative;margin:14px auto 0;width:min(100%,calc((100vh - 285px) * 2 / 3));width:min(100%,calc((100svh - 285px) * 2 / 3));aspect-ratio:360/540;border-radius:18px;overflow:hidden;box-shadow:0 0 0 1px rgba(27,24,21,.10),0 18px 44px -16px rgba(60,40,20,.32);touch-action:none;user-select:none;-webkit-user-select:none}
 canvas{display:block;width:100%;height:100%}
 .ov{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:20px;background:#f3efe6d9;backdrop-filter:blur(2px)}
 .ov[hidden]{display:none}
@@ -127,9 +130,11 @@ button{font:inherit;font-weight:800;border:0;border-radius:14px;padding:13px 20p
       <div class="stage" id="stage">
         <canvas id="game" aria-label="Game: steer a truck around cows on a desert highway"></canvas>
         <div class="banner" id="banner" hidden></div>
+        <button class="pad l" id="padL" aria-label="Steer left">◀</button>
+        <button class="pad r" id="padR" aria-label="Steer right">▶</button>
         <div class="ov" id="ovStart">
           <div class="big pulse">TAP TO DRIVE</div>
-          <div class="hint">Hold the left or right side to steer</div>
+          <div class="hint">Hold ◀ or ▶ to steer</div>
         </div>
         <div class="ov" id="ovOver" hidden>
           <div class="big" id="overTitle">MOO.</div>
@@ -279,7 +284,7 @@ if (beat) { $('banner').textContent = (from || 'Someone') + ' scored ' + beat.to
 for (let i = 0; i < 9; i++) deco.push({ x: i % 2 ? 8 + Math.random()*24 : W - 32 + Math.random()*24, y: Math.random()*H, s: 16 + Math.random()*12, k: [0,1,0,2,1,3,0,1,2][i] });
 
 function reset(){ t = 0; speed = 230; score = 0; cows = []; pops = []; spawnT = 0.7; truckX = W/2; shake = 0; }
-function start(){ reset(); state = 'play'; $('ovStart').hidden = true; $('ovOver').hidden = true; }
+function start(){ reset(); state = 'play'; $('ovStart').hidden = true; $('ovOver').hidden = true; $('padL').hidden = $('padR').hidden = false; }
 function crash(){
   state = 'over'; shake = 0.45;
   const s = Math.floor(score), isBest = s > best;
@@ -289,7 +294,7 @@ function crash(){
   $('overBest').textContent = beat && s > beat ? 'You beat ' + (from || 'them') + ' by ' + (s - beat).toLocaleString() + '.'
     : beat ? (beat - s + 1).toLocaleString() + ' more to beat ' + (from || 'them') + '.'
     : isBest ? 'New best!' : 'Your best: ' + best.toLocaleString();
-  setTimeout(() => { if (state === 'over') { $('ovOver').hidden = false; mark(1); } }, 550);
+  setTimeout(() => { if (state === 'over') { $('ovOver').hidden = false; $('padL').hidden = $('padR').hidden = true; mark(1); } }, 550);
 }
 
 function spawn(){
@@ -393,6 +398,13 @@ stage.addEventListener('pointerdown', e => {
 });
 stage.addEventListener('pointermove', e => { if (state === 'play' && e.buttons) steer(e); });
 for (const ev of ['pointerup', 'pointercancel']) stage.addEventListener(ev, () => { dir = 0; });
+// on-screen steering buttons for phones and tablets
+for (const [id, d] of [['padL', -1], ['padR', 1]]) {
+  const b = $(id);
+  b.addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); if (state !== 'play') start(); dir = d; b.classList.add('on'); try { b.setPointerCapture(e.pointerId); } catch(_){} });
+  for (const ev of ['pointerup', 'pointercancel', 'lostpointercapture']) b.addEventListener(ev, () => { if (dir === d) dir = 0; b.classList.remove('on'); });
+  b.addEventListener('contextmenu', e => e.preventDefault());
+}
 addEventListener('keydown', e => {
   if (cur !== 1) return;
   const k = e.key;
