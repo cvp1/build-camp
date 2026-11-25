@@ -2,12 +2,12 @@
 
 Each mission ships something real and teaches one habit. Your first session starts with
 an interview; Claude uses it to fill in a project for each mission in your private
-`PROGRESS.md`. Don't skip ahead; each habit is what makes the next mission possible.
+`PROGRESS.md`. Go in order unless you already know a step.
 Pick projects **you** actually want; the examples are just examples.
 
 | # | Mission | You ship | The habit |
 |---|---|---|---|
-| 0 | **First spark** (claude.ai, no install) | A playable web game or tool, built by describing it | Describe the outcome, not the steps |
+| 0 | **First build** (claude.ai, no install) | A playable web game or tool, built by describing it | Describe the outcome, not the steps |
 | 1 | **Your own workshop** | Claude Code running, your first page, git as your undo button, and the page live on the internet if you choose | Git is your undo button |
 | 2 | **Catch it lying** | A small app *with tests*; plus one bug you found that Claude missed | "Done" means proven, not claimed |
 | 3 | **Plan the big one** | Something you'd use weekly (Discord bot, tracker, mod, scraper) | Plan first, build in small steps |
@@ -51,7 +51,7 @@ moves or spends something) by showing your read-only tool is solid. Their creden
 never go in your repo or your chat with Claude.
 
 ## How each mission ends
-1. Demo it (screen share or a 2-minute video).
+1. Show someone it working.
 2. Answer three questions in `PROGRESS.md`: what did you build, where did the AI get it
    wrong, what would you do differently?
 3. From Mission 1 on, commit your work. Push only if you chose to put it online.

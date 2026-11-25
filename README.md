@@ -22,8 +22,8 @@ Go to **[claude.ai](https://claude.ai)**, sign in, and paste one of these:
 > button, five rounds, average time at the end, and a rank from sloth to fighter pilot.
 
 It builds it right there and you can play it. Then tell it what to change: *"make
-it harder"*, *"add a second player"*, *"make it look like an 80s arcade"*. That's the
-whole trick. **You describe it; it builds it; you steer.**
+it harder"*, *"add a second player"*, *"make it look like an 80s arcade"*. That's it.
+**You describe it; it builds it; you steer.**
 
 Now make up your own. That's Mission 0.
 
@@ -39,10 +39,7 @@ Now make up your own. That's Mission 0.
 | Month 2 | Something that runs by itself every day and tells you when it breaks |
 | After that | Tools for real systems: homes, farms, shops |
 
-Along the way you learn the part most people skip: how to catch the AI when it's wrong,
-how to plan something big, and how to make it remember how you like things done.
-
-## Ready for the real tools? (Mission 1 onward)
+## Set up Claude Code (Mission 1 onward)
 
 You'll need a laptop and about half an hour for setup and your first build.
 
