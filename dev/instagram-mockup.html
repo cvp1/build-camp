@@ -1,0 +1,92 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><style>
+*{box-sizing:border-box;margin:0}
+body{background:#e6e6e3;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;color:#111;padding:34px 36px;width:1780px}
+h1{font-size:34px;letter-spacing:-.02em;margin-bottom:4px}.sub{font-size:18px;color:#555;margin-bottom:22px}
+.row{display:flex;gap:30px;align-items:flex-start}
+.col{width:390px;flex:none}.lbl{font-size:17px;font-weight:700;margin-bottom:8px}.lbl span{font-weight:400;color:#666}
+.ph{width:390px;height:844px;border-radius:38px;overflow:hidden;position:relative;background:#fff;box-shadow:0 0 0 10px #111,0 20px 50px #0003;margin:10px}
+.sb{height:44px;display:flex;justify-content:space-between;align-items:center;padding:0 26px;font-size:15px;font-weight:600}
+.dark{background:#000;color:#fff}
+.top{height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 14px}
+.logo{font-family:"Snell Roundhand","Brush Script MT",cursive;font-size:27px;font-weight:700}
+.ic{display:flex;gap:18px;align-items:center}svg{display:block}
+.ph1 .hd{height:52px;display:flex;align-items:center;gap:10px;padding:0 12px;font-size:14px;font-weight:600}
+.av{width:32px;height:32px;border-radius:50%;background:#1b1815;color:#f3efe6;display:grid;place-items:center;font-size:13px;font-weight:700;box-shadow:0 0 0 2px #fff,0 0 0 4px #d6336c}
+.media{width:390px;height:487.5px;background:url(cover.png) center/cover;position:relative}
+.badge{position:absolute;right:12px;bottom:12px;width:28px;height:28px;border-radius:50%;background:#000a;display:grid;place-items:center}
+.act{height:46px;display:flex;align-items:center;padding:0 12px;gap:16px;font-size:14px;font-weight:600}.act .sp{flex:1}.act span{margin-left:-10px}
+.cap{padding:0 14px;font-size:14px;line-height:1.35}.cap b{font-weight:600}.more{color:#737373}
+.time{padding:6px 14px;font-size:12px;color:#737373}
+.nav{position:absolute;left:0;right:0;bottom:0;height:64px;border-top:1px solid #dbdbdb;background:#fff;display:flex;justify-content:space-around;align-items:flex-start;padding-top:12px}
+.reel{position:absolute;left:0;right:0;top:50px;height:693px;background:url(f2.png) center/100% 100%}
+.reel::after{content:"";position:absolute;inset:0;background:linear-gradient(#0005,transparent 14%,transparent 66%,#000a)}
+.rt{position:absolute;left:16px;right:16px;top:64px;display:flex;justify-content:space-between;color:#fff;font-size:22px;font-weight:700;z-index:2}
+.rc{position:absolute;right:10px;bottom:150px;display:flex;flex-direction:column;gap:20px;align-items:center;color:#fff;font-size:12px;font-weight:600;z-index:2}
+.rb{position:absolute;left:14px;right:70px;bottom:112px;color:#fff;font-size:14px;z-index:2;line-height:1.35}
+.rb .u{display:flex;align-items:center;gap:8px;font-weight:600;margin-bottom:8px}.rb .f{border:1px solid #fff;border-radius:8px;padding:3px 10px;font-size:13px}
+.rb .a{margin-top:8px;font-size:13px}
+.safe{position:absolute;left:8px;right:8px;top:153px;height:487px;border:2px dashed #ffd9c9;border-radius:10px;z-index:3}
+.safe i{position:absolute;left:8px;bottom:6px;font-style:normal;font-size:11px;font-weight:700;color:#ffd9c9;background:#000a;padding:2px 6px;border-radius:5px}
+.rnav{position:absolute;left:0;right:0;bottom:0;height:64px;background:#000;display:flex;justify-content:space-around;align-items:flex-start;padding-top:12px;z-index:4}
+.pf{padding:6px 16px 0}.pfh{display:flex;align-items:center;gap:22px;margin:8px 0 10px}
+.pfa{width:78px;height:78px;border-radius:50%;background:#1b1815;color:#f3efe6;display:grid;place-items:center;font-size:28px;font-weight:700}
+.st{display:flex;gap:24px;font-size:13px;text-align:center}.st b{display:block;font-size:17px}
+.bio{font-size:14px;line-height:1.35}.bio a{color:#00376b;font-weight:600;text-decoration:none}
+.btns{display:flex;gap:6px;margin:12px 0}.btns div{flex:1;background:#efefef;border-radius:8px;text-align:center;padding:7px;font-size:14px;font-weight:600}
+.tabs{display:flex;border-top:1px solid #dbdbdb;margin:0 -16px}.tabs div{flex:1;display:grid;place-items:center;height:44px}.tabs div:first-child{border-bottom:1.5px solid #111}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.grid div{aspect-ratio:3/4;background:#dedbd3}.grid .c{background:url(cover.png) center/cover;position:relative}
+.grid .c::after{content:"";position:absolute;right:6px;top:6px;width:16px;height:16px;border-radius:4px;border:2px solid #fff}
+.notes{flex:1;background:#fff;border-radius:16px;padding:22px 24px;font-size:16.5px;line-height:1.4}
+.notes h2{font-size:21px;margin-bottom:10px}.notes ol{padding-left:20px;margin-bottom:16px}.notes li{margin-bottom:8px}.notes li b{display:block}
+.capbox{background:#f6f5f2;border-radius:12px;padding:14px 16px;font-size:15px;white-space:pre-line;line-height:1.4}
+.k{font-size:12px;letter-spacing:.1em;color:#777;font-weight:700;margin:14px 0 6px}
+</style></head><body>
+<h1>Build Camp on Instagram — what a good post looks like</h1>
+<p class="sub">Real frames from the Instagram cut of our video, inside Instagram's layout. The handle and counts are placeholders.</p>
+<div class="row">
+<div class="col"><div class="lbl">1 · In the feed <span>(cropped to 4:5)</span></div>
+<div class="ph ph1"><div class="sb"><span>9:41</span><span>●●● ▮</span></div>
+<div class="top"><span class="logo">Instagram</span><span class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2"><path d="M12 21s-7-4.6-9.3-9A5.4 5.4 0 0 1 12 6a5.4 5.4 0 0 1 9.3 6c-2.3 4.4-9.3 9-9.3 9z"/></svg><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2"><path d="M21 3 3 10.5l7 2.5 2.5 7z"/><path d="m10 13 11-10"/></svg></span></div>
+<div class="hd"><span class="av">BC</span><span>your_handle</span><span style="flex:1"></span><span>•••</span></div>
+<div class="media"><span class="badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M3 9v6h4l5 5V4L7 9z"/><path d="m16 9 5 6m0-6-5 6" stroke="#fff" stroke-width="2"/></svg></span></div>
+<div class="act"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2"><path d="M12 21s-7-4.6-9.3-9A5.4 5.4 0 0 1 12 6a5.4 5.4 0 0 1 9.3 6c-2.3 4.4-9.3 9-9.3 9z"/></svg><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5A8.5 8.5 0 1 1 21 11.5z"/></svg><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2"><path d="M21 3 3 10.5l7 2.5 2.5 7z"/><path d="m10 13 11-10"/></svg><span class="sp"></span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2"><path d="M6 3h12v18l-6-5-6 5z"/></svg></div>
+<div class="cap"><b>your_handle</b> I asked an AI for a game where a truck dodges cows. It wrote every line; I never touched<span class="more">… more</span></div>
+<div class="time">2 minutes ago</div>
+<div class="nav"><svg width="26" height="26" viewBox="0 0 24 24" fill="#111"><path d="M3 11 12 3l9 8v10h-6v-6H9v6H3z"/></svg><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M12 8v8M8 12h8"/></svg><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="m10 9 5 3-5 3z"/></svg><span class="av" style="width:26px;height:26px;font-size:10px;box-shadow:none">BC</span></div></div></div>
+
+<div class="col"><div class="lbl">2 · Full screen as a Reel <span>(dashed line = safe band)</span></div>
+<div class="ph dark"><div class="reel"></div><div class="safe"><i>all our text stays inside this</i></div>
+<div class="rt"><span>Reels</span><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="6" width="18" height="14" rx="3"/><circle cx="12" cy="13" r="3.5"/></svg></div>
+<div class="rc"><div><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 21s-7-4.6-9.3-9A5.4 5.4 0 0 1 12 6a5.4 5.4 0 0 1 9.3 6c-2.3 4.4-9.3 9-9.3 9z"/></svg>—</div><div><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5A8.5 8.5 0 1 1 21 11.5z"/></svg>—</div><div><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M21 3 3 10.5l7 2.5 2.5 7z"/><path d="m10 13 11-10"/></svg></div><div>•••</div></div>
+<div class="rb"><div class="u"><span class="av" style="box-shadow:none">BC</span>your_handle <span class="f">Follow</span></div>I asked an AI for a game where a truck dodges… <span style="opacity:.7">more</span><div class="a">♪ music you add in Instagram</div></div>
+<div class="rnav"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M3 11 12 3l9 8v10h-6v-6H9v6H3z"/></svg><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M12 8v8M8 12h8"/></svg><svg width="26" height="26" viewBox="0 0 24 24" fill="#fff" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/></svg><span class="av" style="width:26px;height:26px;font-size:10px;box-shadow:none;background:#f3efe6;color:#111">BC</span></div></div></div>
+
+<div class="col"><div class="lbl">3 · On your profile grid <span>(cover cropped to 3:4)</span></div>
+<div class="ph"><div class="sb"><span>9:41</span><span>●●● ▮</span></div>
+<div class="pf"><div style="font-size:20px;font-weight:700">your_handle</div>
+<div class="pfh"><div class="pfa">BC</div><div class="st"><div><b>1</b>posts</div><div><b>—</b>followers</div><div><b>—</b>following</div></div></div>
+<div class="bio"><b>Build Camp</b><br>Play a game. Then build your own by asking.<br><a>🔗 cvp1.github.io/build-camp</a></div>
+<div class="btns"><div>Edit profile</div><div>Share profile</div></div>
+<div class="tabs"><div><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2"><rect x="3" y="3" width="18" height="18"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/></svg></div><div><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="m10 9 5 3-5 3z"/></svg></div><div><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><circle cx="12" cy="9" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div></div></div>
+<div class="grid"><div class="c"></div><div></div><div></div><div></div><div></div><div></div></div></div></div>
+
+<div class="notes"><h2>What makes it work</h2>
+<ol>
+<li><b>Post it as a Reel.</b>It's a vertical video, and Reels are how Instagram shows video.</li>
+<li><b>Words on screen in the first second.</b>The Instagram cut opens with "Watch a sentence become a game."</li>
+<li><b>All text in the middle band.</b>Instagram crops the top and bottom in the feed and on your grid. Our normal cut loses its captions there; this cut doesn't.</li>
+<li><b>The caption's first line is the hook.</b>Only that line shows before "more".</li>
+<li><b>Put the link in your bio.</b>Links in captions can't be tapped, so the end card says "Link in bio".</li>
+<li><b>Add music in Instagram when you post.</b>Their library is licensed, and I can't hear to choose a track.</li>
+</ol>
+<div class="k">DRAFT CAPTION</div>
+<div class="capbox">I asked an AI for a game where a truck dodges cows. It wrote every line; I never touched the code.
+
+Then I put together a page so anyone can try it — play the game first, then build your own in about five minutes. Works on a phone and it's free to try.
+
+Link in bio. Let me know what you make.
+
+#buildwithai #claudeai #nocode</div>
+</div>
+</div></body></html>
