@@ -63,7 +63,14 @@ footer{padding:48px 0 60px;color:var(--dim);font-size:14px;text-align:center}
 .sheet .in{max-width:460px;margin:0 auto}
 .sheet h3{font-size:22px;font-weight:900;margin-bottom:4px}
 .sheet ol{margin:10px 0 14px;padding-left:22px;color:var(--ink)}
-.sheet .p{background:#14101c;border-radius:12px;padding:12px;font-size:14px;color:var(--dim);margin-bottom:14px;max-height:92px;overflow:auto}
+.sheet li{margin-bottom:6px}
+.up{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--hot);color:#1c0d02;font-weight:900;font-size:15px;line-height:1;vertical-align:-5px}
+.up.lg{width:40px;height:40px;font-size:22px;flex:none;animation:ring 1.3s ease-out infinite}
+@keyframes ring{0%{box-shadow:0 0 0 0 #ff7a3dcc}100%{box-shadow:0 0 0 16px #ff7a3d00}}
+.mock{display:flex;align-items:flex-end;gap:12px;background:#14101c;border-radius:18px;padding:12px 12px 12px 16px;box-shadow:inset 0 0 0 1px var(--line)}
+.mt{flex:1;font-size:14px;line-height:1.35;color:var(--ink);max-height:57px;overflow:hidden}
+.cap{font-size:13px;color:var(--dim);text-align:right;margin:6px 4px 14px}
+.fine{font-size:13px;color:var(--dim);text-align:center;margin-top:10px}
 .sheet .btn{width:100%}
 .sheet .x{position:absolute;right:14px;top:10px;background:none;color:var(--dim);font-size:22px;padding:8px}
 .toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,80px);background:var(--sun);color:#221a05;font-weight:800;padding:10px 16px;border-radius:99px;transition:transform .25s;z-index:20;white-space:nowrap;font-size:15px}
@@ -104,7 +111,7 @@ footer{padding:48px 0 60px;color:var(--dim);font-size:14px;text-align:center}
 
   <section id="turn">
     <h2>Your turn. Five minutes.</h2>
-    <p>Tap one. It copies the instructions and opens Claude, which is free to try. Paste, send, and play what it builds.</p>
+    <p>Tap one. Claude opens with the instructions already typed in. Hit the <span class="up">↑</span> button and it starts building. Free to try.</p>
     <div class="cards">
       <button class="card top" data-prompt="Ask me 3 quick questions about what I'm into, one at a time. Then build me a small game or tool based on my answers that works on my phone.">
         <span class="em">🎲</span><span><span class="t">Surprise me</span><span class="d">It asks what you're into, then builds something for you</span></span><span class="go">›</span>
@@ -154,10 +161,16 @@ footer{padding:48px 0 60px;color:var(--dim);font-size:14px;text-align:center}
 <div class="sheet" id="sheet" role="dialog" aria-labelledby="sheetT">
   <div class="in">
     <button class="x" id="sheetX" aria-label="Close">✕</button>
-    <h3 id="sheetT">Copied ✓</h3>
-    <ol><li>Open Claude and sign in (free)</li><li>Paste it in and hit send</li><li>Play what it builds</li></ol>
-    <div class="p" id="sheetP"></div>
+    <h3 id="sheetT">Two taps and it starts building</h3>
+    <ol>
+      <li>Tap <b>Open Claude</b> below. Sign in if it asks; it's free.</li>
+      <li>Your instructions are already typed in. <b>Tap the <span class="up">↑</span> button to send them.</b></li>
+      <li>It builds while you watch. Then play it.</li>
+    </ol>
+    <div class="mock" aria-hidden="true"><div class="mt" id="sheetP"></div><span class="up lg">↑</span></div>
+    <div class="cap">What you'll see in Claude. Tap the arrow.</div>
     <a class="btn" id="sheetGo" target="_blank" rel="noopener">Open Claude →</a>
+    <div class="fine" id="sheetFine"></div>
   </div>
 </div>
 <div class="toast" id="toast"></div>
@@ -317,7 +330,7 @@ $('share').addEventListener('click', async () => {
 const sheet = $('sheet');
 document.querySelectorAll('.card').forEach(b => b.addEventListener('click', async () => {
   const p = b.dataset.prompt, ok = await copy(p);
-  $('sheetT').textContent = ok ? 'Copied ✓' : 'Copy this';
+  $('sheetFine').textContent = ok ? 'Box empty when Claude opens? Just paste. The instructions are already copied.' : 'Box empty when Claude opens? Come back and tap the card again.';
   $('sheetP').textContent = p;
   $('sheetGo').href = 'https://claude.ai/new?q=' + encodeURIComponent(p);
   sheet.classList.add('on');
