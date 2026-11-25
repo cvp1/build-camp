@@ -2,35 +2,36 @@
 <html><head><meta charset="UTF-8">
 <style>
 @font-face{font-family:'PJS';src:url('pjs.woff2') format('woff2');font-weight:200 800}
-:root{--bg:#14110f;--panel:#201c18;--ink:#f5eedc;--dim:#c5baa8;--hot:#e0824b;--sun:#d99a36}
+:root{--bg:#0e0f0d;--panel:#171916;--ink:#e4e1d5;--dim:#9d9e90;--hot:#c8b67a;--sun:#8e967f}
 *{box-sizing:border-box;margin:0}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.085;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .95  0 0 0 0 .95  0 0 0 0 .88  0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
 html,body{width:360px;height:640px;overflow:hidden;background:var(--bg);color:var(--ink);font-family:'PJS',system-ui,sans-serif;font-weight:800}
 .sc{position:absolute;inset:0;opacity:0}
 .w{display:inline-block;will-change:transform,opacity}
 /* A */
 .lab{position:absolute;left:28px;top:212px;font-size:12px;letter-spacing:.22em;color:var(--hot)}
-.ask{position:absolute;left:24px;right:24px;top:240px;min-height:150px;background:var(--panel);border-radius:22px;padding:20px 22px 62px;font-size:25px;line-height:1.3;font-weight:600;box-shadow:inset 0 0 0 1.5px rgba(220,180,140,.16)}
+.ask{position:absolute;left:24px;right:24px;top:240px;min-height:150px;background:var(--panel);border-radius:22px;padding:20px 22px 62px;font-size:25px;line-height:1.3;font-weight:600;box-shadow:inset 0 0 0 1.5px rgba(205,205,180,.15)}
 .caret{display:inline-block;width:3px;height:27px;background:var(--hot);vertical-align:-5px;margin-left:2px}
-.send{position:absolute;right:14px;bottom:14px;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-size:23px;line-height:1;background:#3a322a;color:#8d8374}
+.send{position:absolute;right:14px;bottom:14px;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-size:23px;line-height:1;background:#2a2c27;color:#7d7f72}
 .ring{position:absolute;right:14px;bottom:14px;width:42px;height:42px;border-radius:50%;border:3px solid var(--hot);opacity:0}
 /* B */
 #B{opacity:1;clip-path:circle(0px at 301px 355px)}
 #g{position:absolute;left:50%;top:0;height:640px;width:426.67px;transform:translateX(-50%)}
-.scrim{position:absolute;left:0;right:0;top:0;height:300px;background:linear-gradient(#14110ff5,#14110fd0 50%,transparent)}
+.scrim{position:absolute;left:0;right:0;top:0;height:300px;background:linear-gradient(#0e0f0df5,#0e0f0dd0 50%,transparent)}
 .cap{position:absolute;left:28px;right:28px;top:64px;font-size:45px;line-height:1.04;letter-spacing:-.02em}
 /* C */
 .h{position:absolute;left:28px;right:28px;top:78px;font-size:41px;line-height:1.04;letter-spacing:-.02em}
-.bub{position:absolute;right:24px;background:var(--panel);border-radius:20px 20px 5px 20px;padding:13px 18px;font-size:19px;font-weight:600;box-shadow:inset 0 0 0 1.5px rgba(220,180,140,.16);opacity:0;transform-origin:100% 100%;white-space:nowrap}
+.bub{position:absolute;right:24px;background:var(--panel);border-radius:20px 20px 5px 20px;padding:13px 18px;font-size:19px;font-weight:600;box-shadow:inset 0 0 0 1.5px rgba(205,205,180,.15);opacity:0;transform-origin:100% 100%;white-space:nowrap}
 .say{position:absolute;left:28px;right:28px;bottom:74px;font-size:32px;line-height:1.1;letter-spacing:-.02em}
 .hot{color:var(--hot)}
 /* D */
 .three{position:absolute;left:28px;right:28px;top:190px;font-size:57px;line-height:1.16;letter-spacing:-.03em}
 .three div{opacity:0}
 /* E */
-#dim{position:absolute;inset:0;background:#14110f;opacity:.8}
+#dim{position:absolute;inset:0;background:#0e0f0d;opacity:.8}
 .mark{position:absolute;left:28px;top:150px;font-size:15px;letter-spacing:.26em;color:var(--hot)}
 .end{position:absolute;left:28px;right:28px;top:186px;font-size:46px;line-height:1.04;letter-spacing:-.02em}
-.url{position:absolute;left:28px;top:400px;background:var(--hot);color:#1c0d02;font-size:19px;padding:13px 20px;border-radius:14px;opacity:0}
+.url{position:absolute;left:28px;top:400px;background:var(--hot);color:#10120c;font-size:19px;padding:13px 20px;border-radius:14px;opacity:0}
 .free{position:absolute;left:28px;top:468px;font-size:16px;font-weight:600;color:var(--dim);opacity:0}
 </style></head><body>
 <canvas id="gsrc" width="1080" height="1620" style="display:none"></canvas>
@@ -96,7 +97,7 @@ function mulberry(a){ return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Mat
 function makeSim(seed){
   const R = mulberry(seed);
   const s = { t: 0, speed: 330, score: 0, cows: [], pops: [], deco: [], spawnT: 0.25, x: W / 2, target: W / 2, scroll: 0, crashed: false, close: 0 };
-  for (let i = 0; i < 9; i++) s.deco.push({ x: i % 2 ? 8 + R() * 24 : W - 32 + R() * 24, y: R() * H, s: 16 + R() * 12 });
+  for (let i = 0; i < 9; i++) s.deco.push({ x: i % 2 ? 8 + R() * 24 : W - 32 + R() * 24, y: R() * H, s: 16 + R() * 12, k: [0,1,0,2,1,3,0,1,2][i] });
   s.step = dt => {
     s.t += dt; s.speed = Math.min(620, 330 + s.t * 13); s.score += s.speed * dt / 12; s.scroll += s.speed * dt;
     for (const d of s.deco) { d.y += s.speed * dt; if (d.y > H + 20) { d.y = -20; d.x = R() < 0.5 ? 8 + R() * 24 : W - 32 + R() * 24; } }
@@ -126,29 +127,42 @@ let sim = makeSim(SEED), simT = 0;
 function simTo(gt){ if (gt < simT) { sim = makeSim(SEED); simT = 0; } while (simT + DT <= gt + 1e-9) { sim.step(DT); simT += DT; } }
 
 const src = $('gsrc'), sx = src.getContext('2d'); sx.scale(3, 3);
+function plant(c, d){
+  const r = d.s * 0.36;
+  if (d.k === 2) { c.strokeStyle = '#55624a'; c.lineWidth = 2; c.lineCap = 'round'; c.beginPath();
+    for (let i = 0; i < 9; i++) { const a = i * 0.698 + d.s; c.moveTo(d.x, d.y); c.lineTo(d.x + Math.cos(a) * r * 1.5, d.y + Math.sin(a) * r * 1.5); } c.stroke();
+    c.fillStyle = '#3c4935'; c.beginPath(); c.arc(d.x, d.y, 2.5, 0, 7); c.fill(); return; }
+  if (d.k === 3) { c.strokeStyle = '#9a9474'; c.lineWidth = 1.6; c.lineCap = 'round'; c.beginPath();
+    for (let i = -2; i <= 2; i++) { c.moveTo(d.x + i * 2, d.y + 4); c.lineTo(d.x + i * 4.5, d.y - r); } c.stroke(); return; }
+  const deep = d.k === 0;
+  c.fillStyle = '#0003'; c.beginPath(); c.ellipse(d.x + 2, d.y + 3, r * 1.3, r * 0.9, 0, 0, 7); c.fill();
+  c.fillStyle = deep ? '#3c4935' : '#7c856b';
+  for (const [ox, oy, k] of [[-0.55, 0.15, 0.8], [0.5, 0.25, 0.75], [0, -0.3, 1]]) { c.beginPath(); c.arc(d.x + ox * r, d.y + oy * r, r * k, 0, 7); c.fill(); }
+  c.fillStyle = deep ? '#53624a' : '#969e86'; c.beginPath(); c.arc(d.x - r * 0.2, d.y - r * 0.45, r * 0.42, 0, 7); c.fill();
+}
 function rr(x, y, w, h, r){ sx.beginPath(); sx.moveTo(x+r, y); sx.arcTo(x+w, y, x+w, y+h, r); sx.arcTo(x+w, y+h, x, y+h, r); sx.arcTo(x, y+h, x, y, r); sx.arcTo(x, y, x+w, y, r); sx.closePath(); }
 function drawGame(){
   const s = sim, ctx = sx;
-  const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#f0a95a'); g.addColorStop(1, '#d98f45');
+  const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#cfc8aa'); g.addColorStop(1, '#b7af8f');
   ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-  ctx.fillStyle = '#2c2b2a'; ctx.fillRect(RL, 0, RR - RL, H);
-  ctx.fillStyle = '#f5e9d0'; ctx.fillRect(RL, 0, 3, H); ctx.fillRect(RR - 3, 0, 3, H);
-  ctx.fillStyle = '#f5e9d099'; const off = s.scroll % 56;
+  ctx.fillStyle = '#232423'; ctx.fillRect(RL, 0, RR - RL, H);
+  ctx.fillStyle = '#d9d6c6'; ctx.fillRect(RL, 0, 3, H); ctx.fillRect(RR - 3, 0, 3, H);
+  ctx.fillStyle = '#d9d6c688'; const off = s.scroll % 56;
   for (const lx of [RL + (RR - RL) / 3, RL + 2 * (RR - RL) / 3]) for (let y = -56 + off; y < H; y += 56) ctx.fillRect(lx - 2, y, 4, 26);
   ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-  for (const d of s.deco) { ctx.font = d.s + 'px serif'; ctx.fillStyle = '#000'; ctx.fillText('🌵', d.x, d.y); }
+  for (const d of s.deco) plant(ctx, d);
   ctx.font = '34px serif';
   for (const c of s.cows) { ctx.fillStyle = '#0005'; ctx.beginPath(); ctx.ellipse(c.x, c.y + 14, 16, 5, 0, 0, 7); ctx.fill(); ctx.fillStyle = '#000'; ctx.fillText('🐄', c.x, c.y); }
   const x = s.x, y = TY;
   ctx.fillStyle = '#0006'; rr(x - 15, y - 26, 34, 62, 8); ctx.fill();
   ctx.fillStyle = '#131110'; for (const [wx, wy] of [[-20,-22],[14,-22],[-20,12],[14,12]]) { rr(x + wx, y + wy, 6, 13, 2); ctx.fill(); }
-  ctx.fillStyle = '#ff4d3d'; rr(x - 17, y - 30, 34, 60, 7); ctx.fill();
-  ctx.fillStyle = '#ff7461'; rr(x - 13, y - 27, 26, 11, 4); ctx.fill();
+  ctx.fillStyle = '#99443c'; rr(x - 17, y - 30, 34, 60, 7); ctx.fill();
+  ctx.fillStyle = '#ad5a51'; rr(x - 13, y - 27, 26, 11, 4); ctx.fill();
   ctx.fillStyle = '#1b1f24'; rr(x - 12, y - 14, 24, 10, 3); ctx.fill();
-  ctx.fillStyle = '#d93a2c'; rr(x - 12, y - 3, 24, 8, 2); ctx.fill();
-  ctx.fillStyle = '#8f231a'; rr(x - 13, y + 7, 26, 20, 3); ctx.fill();
-  ctx.fillStyle = '#ffe98a'; ctx.fillRect(x - 14, y - 31, 7, 3); ctx.fillRect(x + 7, y - 31, 7, 3);
-  ctx.font = '800 15px PJS'; for (const p of s.pops) { ctx.globalAlpha = Math.min(1, p.life * 2); ctx.fillStyle = '#ffe08a'; ctx.fillText(p.text, p.x, p.y); } ctx.globalAlpha = 1;
+  ctx.fillStyle = '#853a33'; rr(x - 12, y - 3, 24, 8, 2); ctx.fill();
+  ctx.fillStyle = '#5f2623'; rr(x - 13, y + 7, 26, 20, 3); ctx.fill();
+  ctx.fillStyle = '#e4dfb6'; ctx.fillRect(x - 14, y - 31, 7, 3); ctx.fillRect(x + 7, y - 31, 7, 3);
+  ctx.font = '800 15px PJS'; for (const p of s.pops) { ctx.globalAlpha = Math.min(1, p.life * 2); ctx.fillStyle = '#e4e1d5'; ctx.fillText(p.text, p.x, p.y); } ctx.globalAlpha = 1;
   ctx.font = '800 24px PJS'; ctx.textAlign = 'left'; ctx.textBaseline = 'top'; ctx.shadowColor = '#000a'; ctx.shadowBlur = 6; ctx.fillStyle = '#fff';
   ctx.textBaseline = 'bottom'; ctx.fillText(Math.floor(s.score).toLocaleString(), 62, H - 22); ctx.shadowBlur = 0;
   $('g').getContext('2d').drawImage(src, 0, 0, 1080, 1620, 0, 0, 1280, 1920);
@@ -166,7 +180,7 @@ window.seek = t => {
   $('typed').textContent = ASK.slice(0, Math.round(prog(t, 0.6, 2.75) * ASK.length));
   $('caret').style.opacity = t < 2.8 ? 1 : (Math.floor(t * 2.5) % 2 ? 0 : 1);
   const armed = t >= 2.85, press = prog(t, 3.25, 3.4) * (1 - prog(t, 3.4, 3.55));
-  $('send').style.background = armed ? '#e0824b' : '#3a322a'; $('send').style.color = armed ? '#1c0d02' : '#8d8374';
+  $('send').style.background = armed ? '#c8b67a' : '#2a2c27'; $('send').style.color = armed ? '#10120c' : '#7d7f72';
   $('send').style.transform = `scale(${1 + 0.1 * ease(prog(t, 2.85, 3.0)) * (1 - prog(t, 3.0, 3.15)) - 0.14 * press})`;
   const rp = prog(t, 2.9, 3.4); $('ring').style.opacity = armed ? (1 - rp) * 0.9 : 0; $('ring').style.transform = `scale(${1 + rp * 0.9})`;
   $('ask').style.transform = `translateY(${-18 * ease(aOut)}px)`;

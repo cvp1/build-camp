@@ -14,18 +14,19 @@
 <meta property="og:video:type" content="video/mp4">
 <meta property="og:video:width" content="1080">
 <meta property="og:video:height" content="1920">
-<meta name="theme-color" content="#14110f">
+<meta name="theme-color" content="#0e0f0d">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐄</text></svg>">
 <style>
 @font-face{font-family:'Plus Jakarta Sans';src:url('fonts/plus-jakarta-sans-var.woff2') format('woff2');font-weight:200 800;font-style:normal;font-display:swap}
 *{box-sizing:border-box;margin:0}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.085;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .95  0 0 0 0 .95  0 0 0 0 .88  0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
 html,body{height:100%}
-body{background:#14110f;color:#f5eedc;font:17px/1.5 'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
+body{background:#0e0f0d;color:#e4e1d5;font:17px/1.5 'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
 .app{height:100vh;height:100svh;max-width:460px;margin:0 auto;display:flex;flex-direction:column;padding:14px 18px calc(14px + env(safe-area-inset-bottom));gap:12px}
-.mark{font-size:12px;font-weight:800;letter-spacing:.22em;color:#e0824b;flex:none}
+.mark{font-size:12px;font-weight:800;letter-spacing:.22em;color:#c8b67a;flex:none}
 .vid{flex:1;min-height:0;display:flex;justify-content:center}
-video{height:100%;max-width:100%;aspect-ratio:9/16;border-radius:18px;background:#000;box-shadow:0 0 0 2px rgba(220,180,140,.12)}
-.go{flex:none;display:block;text-align:center;text-decoration:none;font-weight:800;font-size:17px;border-radius:14px;padding:15px 16px;background:#e0824b;color:#1c0d02}
+video{height:100%;max-width:100%;aspect-ratio:9/16;border-radius:18px;background:#000;box-shadow:0 0 0 2px rgba(205,205,180,.13)}
+.go{flex:none;display:block;text-align:center;text-decoration:none;font-weight:800;font-size:17px;border-radius:14px;padding:15px 16px;background:#c8b67a;color:#10120c}
 </style>
 </head>
 <body>
