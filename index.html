@@ -15,7 +15,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐄</text></svg>">
 <style>
 @font-face{font-family:'Plus Jakarta Sans';src:url('fonts/plus-jakarta-sans-var.woff2') format('woff2');font-weight:200 800;font-style:normal;font-display:swap}
-:root{--bg:#0e0f0d;--panel:#171916;--ink:#e4e1d5;--dim:#9d9e90;--hot:#c8b67a;--sun:#8e967f;--line:rgba(205,205,180,.13)}
+:root{--bg:#0e0f0d;--panel:#171916;--ink:#e4e1d5;--dim:#9d9e90;--hot:#c8b67a;--sun:#b46b57;--line:rgba(205,205,180,.13)}
 *{box-sizing:border-box;margin:0}
 body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.085;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .95  0 0 0 0 .95  0 0 0 0 .88  0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
 html,body{height:100%}
@@ -330,7 +330,7 @@ function plant(c, d){
   if (d.k === 2) { c.strokeStyle = '#55624a'; c.lineWidth = 2; c.lineCap = 'round'; c.beginPath();
     for (let i = 0; i < 9; i++) { const a = i * 0.698 + d.s; c.moveTo(d.x, d.y); c.lineTo(d.x + Math.cos(a) * r * 1.5, d.y + Math.sin(a) * r * 1.5); } c.stroke();
     c.fillStyle = '#3c4935'; c.beginPath(); c.arc(d.x, d.y, 2.5, 0, 7); c.fill(); return; }
-  if (d.k === 3) { c.strokeStyle = '#9a9474'; c.lineWidth = 1.6; c.lineCap = 'round'; c.beginPath();
+  if (d.k === 3) { c.strokeStyle = '#c9bd8c'; c.lineWidth = 1.6; c.lineCap = 'round'; c.beginPath();
     for (let i = -2; i <= 2; i++) { c.moveTo(d.x + i * 2, d.y + 4); c.lineTo(d.x + i * 4.5, d.y - r); } c.stroke(); return; }
   const deep = d.k === 0;
   c.fillStyle = '#0003'; c.beginPath(); c.ellipse(d.x + 2, d.y + 3, r * 1.3, r * 0.9, 0, 0, 7); c.fill();
@@ -355,7 +355,7 @@ function drawTruck(x, y){
 function draw(){
   ctx.save();
   if (shake > 0) ctx.translate((Math.random() - .5) * 14 * shake / .45, (Math.random() - .5) * 14 * shake / .45);
-  const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#cfc8aa'); g.addColorStop(1, '#b7af8f');
+  const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#a5644f'); g.addColorStop(1, '#8b503f');
   ctx.fillStyle = g; ctx.fillRect(-10, -10, W + 20, H + 20);
   ctx.fillStyle = '#232423'; ctx.fillRect(RL, -10, RR - RL, H + 20);
   ctx.fillStyle = '#d9d6c6'; ctx.fillRect(RL, -10, 3, H + 20); ctx.fillRect(RR - 3, -10, 3, H + 20);
