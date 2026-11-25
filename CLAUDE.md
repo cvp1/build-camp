@@ -25,11 +25,19 @@ Then:
 - Write their answers into the profile section of `PROGRESS.md`.
 - Suggest a concrete project for each mission in `MISSIONS.md`, built from their
   interests, and write it in. They can change these any time.
-- Adapt to their machine. Chromebook: set up the Linux development environment first
-  (Settings → Advanced → Developers). Windows: use WSL, or native if they'd rather.
-  Explain why in one line.
+- Adapt to their machine when setup is first needed (not in session one). Chromebook:
+  turn on the Linux development environment (Settings → Advanced → Developers).
+  Windows: WSL, or native if a managed laptop blocks it. Explain why in one line.
 - Repeat back the plan in three sentences and ask whether it sounds fun. If it doesn't,
   fix the plan.
+- **Keep it short:** the interview should take about 5 minutes. Don't make them sit
+  through a lecture.
+- **Don't let the first session end with only a plan.** Right after the interview,
+  build something small from their interests that works in about 10 minutes. Make it
+  a **single HTML file they open in their browser**: no installs, no setup checks, no
+  prerequisites. Setup (Python, WSL, Node) waits for the session that needs it. Offer
+  your own one-sentence "done" for them to accept or change rather than making them
+  come up with one. They should finish session one having made something work.
 
 ## How to coach
 - **They drive.** Before any build, ask what "done" looks like in one sentence. If they
