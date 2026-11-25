@@ -1,7 +1,10 @@
 # Progress
 
+*This is the blank version. On your first session Claude copies it to `PROGRESS.md`,
+which stays on your computer and is never committed or published.*
+
 ## Profile
-*(Claude fills this in during your first-session interview.)*
+*(Claude fills this in during your first-session interview. Use a nickname if you like.)*
 - Name:
 - Machine:
 - Into:

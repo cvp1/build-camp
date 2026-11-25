@@ -1,0 +1,9 @@
+# Your learning journal stays on your computer.
+PROGRESS.md
+
+# Keys and passwords never go in git.
+.env
+.env.*
+!.env.example
+
+.DS_Store
