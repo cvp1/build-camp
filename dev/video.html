@@ -59,7 +59,6 @@ html,body{width:360px;height:640px;overflow:hidden;background:var(--bg);color:va
   <div class="bub" style="top:268px">🍅&nbsp; a planner for my garden</div>
   <div class="bub" style="top:330px">🥁&nbsp; a beat maker</div>
   <div class="bub" style="top:392px">🏈&nbsp; a scoreboard for game night</div>
-  <div class="say" id="csay">If you can say it, you can <span class="hot">build it.</span></div>
 </div>
 
 <div class="sc" id="D"><div class="three"><div>No coding.</div><div>No install.</div><div class="hot">Five minutes.</div></div></div>
@@ -92,7 +91,7 @@ function split(el){
   });
   el.replaceChildren(...out); return [...el.querySelectorAll('.w')];
 }
-const words = {}; for (const id of ['cap1', 'cap2', 'ch', 'csay', 'eend']) words[id] = split($(id));
+const words = {}; for (const id of ['cap1', 'cap2', 'ch', 'eend']) words[id] = split($(id));
 function reveal(id, t, start, end, stagger = 0.09){
   const out = end == null ? 0 : prog(t, end - 0.3, end);
   words[id].forEach((w, i) => { const p = ease(prog(t, start + i * stagger, start + i * stagger + 0.45));
@@ -211,7 +210,6 @@ window.seek = t => {
   reveal('ch', t, 10.75, null);
   bubs.forEach((b, i) => { const p = prog(t, 11.55 + i * 0.75, 11.55 + i * 0.75 + 0.4);
     b.style.opacity = clamp(p * 2); b.style.transform = `translateY(${(1 - ease(p)) * 22}px) scale(${0.86 + 0.14 * back(p)})`; });
-  reveal('csay', t, 14.9, null, 0.07);
 
   // D: three beats
   $('D').style.opacity = t >= 17.55 && t < 21.5 ? 1 - prog(t, 21.05, 21.35) : 0;
