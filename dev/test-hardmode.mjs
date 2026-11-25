@@ -19,7 +19,7 @@ try {
   let s = await send('Page.captureScreenshot', { format: 'png' }); writeFileSync('/tmp/bc-demo/hard-1.png', Buffer.from(s.data, 'base64'));
   await sleep(14000);
   const term = await ev(`document.getElementById('tb').innerText`);
-  ok('terminal plays through to the question', term.includes('what should I call you?'), term.replace(/\n/g,' | ').slice(0,120));
+  ok('terminal plays through to the question', term.includes('What should I call you?'), term.replace(/\n/g,' | ').slice(0,120));
   s = await send('Page.captureScreenshot', { format: 'png' }); writeFileSync('/tmp/bc-demo/hard-2.png', Buffer.from(s.data, 'base64'));
   ok('Windows visitor gets the Windows tab', await ev(`document.querySelector('.os .on').dataset.os`) === 'win11');
   await ev(`document.querySelector('[data-os=cros]').click()`);
