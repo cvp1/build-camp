@@ -17,18 +17,44 @@
 @font-face{font-family:'Plus Jakarta Sans';src:url('fonts/plus-jakarta-sans-var.woff2') format('woff2');font-weight:200 800;font-style:normal;font-display:swap}
 :root{--bg:#14110f;--panel:#201c18;--ink:#f5eedc;--dim:#c5baa8;--hot:#e0824b;--sun:#d99a36;--line:rgba(220,180,140,.12)}
 *{box-sizing:border-box;margin:0}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--ink);font:17px/1.5 'Plus Jakarta Sans',system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
-.wrap{max-width:460px;margin:0 auto;padding:0 18px}
-.mark{font-size:12px;font-weight:800;letter-spacing:.22em;color:var(--hot);padding:16px 0 6px}
-h1{font-size:clamp(34px,10vw,46px);font-weight:800;line-height:1;letter-spacing:-.02em}
-h2{font-size:clamp(28px,8vw,36px);font-weight:800;line-height:1.05;letter-spacing:-.02em;margin-bottom:12px}
-.sub{color:var(--dim);margin:6px 0 12px;font-size:15px}
-.stage{position:relative;margin:0 auto;width:min(100%,calc(64svh * 360 / 540));aspect-ratio:360/540;border-radius:18px;overflow:hidden;box-shadow:0 0 0 2px var(--line),0 18px 60px -10px #e0824b55;touch-action:none;user-select:none;-webkit-user-select:none}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font:17px/1.5 'Plus Jakarta Sans',system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased;overflow:hidden}
+.app{height:100vh;height:100svh;max-width:460px;margin:0 auto;display:flex;flex-direction:column}
+
+/* header: wordmark, quiet hard-mode link, progress line */
+header{padding:14px 18px 0;flex:none}
+.hd{display:flex;justify-content:space-between;align-items:center}
+.mark{font-size:12px;font-weight:800;letter-spacing:.22em;color:var(--hot)}
+.skip{font-size:13px;font-weight:700;color:var(--dim);text-decoration:none}
+.prog{display:flex;gap:5px;margin-top:12px}
+.prog i{flex:1;height:4px;border-radius:2px;background:rgba(220,180,140,.16);transition:background .3s}
+.prog i.f{background:var(--hot)}
+
+/* one screen at a time */
+main{flex:1;min-height:0;overflow-y:auto;padding:20px 18px 8px}
+.screen{display:none}
+.screen.on{display:block;animation:in .28s ease}
+@keyframes in{from{opacity:0;transform:translateY(10px)}}
+.kicker{font-size:12px;font-weight:800;letter-spacing:.18em;color:var(--sun);margin-bottom:8px}
+h1{font-size:clamp(32px,9.5vw,44px);font-weight:800;line-height:1.04;letter-spacing:-.02em}
+.lead{color:var(--dim);margin-top:10px}
+.lead strong,.foot strong{color:var(--ink)}
+.foot{color:var(--dim);font-size:15px;margin-top:18px}
+
+/* the one next action, always in the same place */
+.bar{flex:none;display:flex;gap:6px;align-items:center;padding:10px 18px calc(14px + env(safe-area-inset-bottom))}
+.backb{color:var(--dim);font-weight:700;font-size:15px;text-decoration:none;padding:14px 12px 14px 2px}
+.backb[hidden]{display:none}
+.nextb{flex:1;text-align:center;text-decoration:none;font-weight:800;font-size:17px;border-radius:14px;padding:15px 16px;color:var(--dim);box-shadow:inset 0 0 0 2px var(--line);transition:background .25s,color .25s}
+.nextb.go{background:var(--hot);color:#1c0d02;box-shadow:none;animation:nudge 1.6s ease-in-out 2}
+@keyframes nudge{50%{transform:scale(1.03)}}
+
+/* step 1: game */
+.stage{position:relative;margin:14px auto 0;width:min(100%,calc((100vh - 285px) * 2 / 3));width:min(100%,calc((100svh - 285px) * 2 / 3));aspect-ratio:360/540;border-radius:18px;overflow:hidden;box-shadow:0 0 0 2px var(--line);touch-action:none;user-select:none;-webkit-user-select:none}
 canvas{display:block;width:100%;height:100%}
 .ov{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:20px;background:#14110fb8;backdrop-filter:blur(2px)}
 .ov[hidden]{display:none}
-.big{font-size:44px;font-weight:800;letter-spacing:-.02em;line-height:1}
+.big{font-size:42px;font-weight:800;letter-spacing:-.02em;line-height:1}
 .pulse{animation:pulse 1.1s ease-in-out infinite}
 @keyframes pulse{50%{transform:scale(1.06)}}
 .score{font-size:20px;font-weight:700}
@@ -36,180 +62,153 @@ canvas{display:block;width:100%;height:100%}
 .hint{font-size:14px;color:var(--dim)}
 .banner{position:absolute;left:10px;right:10px;top:44px;background:var(--sun);color:#221a05;font-weight:800;font-size:14px;padding:7px 10px;border-radius:10px;text-align:center;pointer-events:none}
 .banner[hidden]{display:none}
-button,.btn{font:inherit;font-weight:800;border:0;border-radius:14px;padding:14px 20px;cursor:pointer;background:var(--hot);color:#1c0d02;text-decoration:none;display:inline-block;text-align:center}
-button:active,.btn:active{transform:translateY(1px)}
-.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px var(--line)}
-.row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
-.more{color:var(--sun);font-weight:700;font-size:14px;text-decoration:none;margin-top:6px}
-section{padding:56px 0 8px}
-p{color:var(--dim)}
-p strong{color:var(--ink)}
-.bubble{background:var(--panel);border-radius:18px 18px 18px 4px;padding:16px 18px;margin:16px 0;color:var(--ink);font-size:18px;line-height:1.4;box-shadow:inset 0 0 0 1px var(--line)}
-.cards{display:grid;gap:12px;margin-top:18px}
-.card{width:100%;text-align:left;background:var(--panel);color:var(--ink);padding:16px;border-radius:16px;box-shadow:inset 0 0 0 1px var(--line);display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:center;font-weight:400}
-.card .em{font-size:32px}
+button{font:inherit;font-weight:800;border:0;border-radius:14px;padding:13px 20px;cursor:pointer}
+.ghostb{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px rgba(245,238,220,.35)}
+.linkb{background:none;color:var(--sun);font-size:14px;font-weight:700;padding:6px}
+
+/* step 2: the sentence */
+.bubble{background:var(--panel);border-radius:18px 18px 18px 4px;padding:18px;margin:22px 0;color:var(--ink);font-size:19px;line-height:1.4;box-shadow:inset 0 0 0 1px var(--line)}
+
+/* step 3: pick one */
+.tabs{display:flex;gap:8px;margin-top:18px}
+.tab{flex:1;background:transparent;color:var(--dim);box-shadow:inset 0 0 0 2px var(--line);padding:10px 8px;font-size:15px;border-radius:12px}
+.tab.on{background:var(--ink);color:#14110f;box-shadow:none}
+.cards{display:grid;gap:10px;margin-top:12px}
+.card{width:100%;text-align:left;background:var(--panel);color:var(--ink);padding:14px 16px;border-radius:16px;box-shadow:inset 0 0 0 1px var(--line);display:grid;grid-template-columns:40px 1fr auto;gap:12px;align-items:center;font-weight:400}
+.card[hidden]{display:none}
+.card .em{font-size:30px}
 .card .t{font-weight:800;font-size:18px;display:block}
 .card .d{color:var(--dim);font-size:14px;display:block;line-height:1.3}
 .card .go{color:var(--hot);font-weight:800;font-size:22px}
-.card.top{box-shadow:inset 0 0 0 2px var(--hot)}
-.levels{list-style:none;padding:0;margin:18px 0;display:grid;gap:10px}
-.levels li{background:var(--panel);border-radius:14px;padding:12px 14px;display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;box-shadow:inset 0 0 0 1px var(--line)}
-.levels .n{font-weight:800;color:var(--sun);font-size:13px;letter-spacing:.1em}
-.levels .done{opacity:.55}
-footer{padding:48px 0 60px;color:var(--dim);font-size:14px;text-align:center}
+.up{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--hot);color:#1c0d02;font-weight:800;font-size:15px;line-height:1;vertical-align:-5px}
+
+/* step 4: say it */
+.says{display:grid;gap:10px;margin-top:22px}
+.say{display:flex;align-items:center;gap:10px;background:var(--panel);border-radius:16px 16px 16px 4px;padding:9px 9px 9px 16px;box-shadow:inset 0 0 0 1px var(--line)}
+.say span{flex:1;font-size:17px}
+.say button{padding:9px 14px;font-size:14px;border-radius:10px;min-width:92px;background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px rgba(245,238,220,.35)}
+.say button.ok{background:var(--sun);color:#221a05;box-shadow:none}
+
+/* step 5: the catch */
+.wall{list-style:none;padding:0;margin:22px 0;display:grid;gap:12px;font-size:18px}
+.wall li{padding-left:30px;position:relative}
+.wall li::before{content:"✕";position:absolute;left:2px;color:var(--hot);font-weight:800}
+
+/* hand-off sheet */
 .sheet{position:fixed;left:0;right:0;bottom:0;background:#2d2722;border-radius:22px 22px 0 0;padding:20px 20px calc(22px + env(safe-area-inset-bottom));box-shadow:0 -20px 60px #000a;transform:translateY(105%);transition:transform .28s cubic-bezier(.2,.9,.3,1);z-index:10}
 .sheet.on{transform:none}
-.sheet .in{max-width:460px;margin:0 auto}
-.sheet h3{font-size:22px;font-weight:800;margin-bottom:4px}
-.sheet ol{margin:10px 0 14px;padding-left:22px;color:var(--ink)}
+.sheet .in{max-width:460px;margin:0 auto;position:relative}
+.sheet h3{font-size:22px;font-weight:800;margin-bottom:4px;padding-right:36px}
+.sheet ol{margin:10px 0 14px;padding-left:22px}
 .sheet li{margin-bottom:6px}
-.up{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--hot);color:#1c0d02;font-weight:800;font-size:15px;line-height:1;vertical-align:-5px}
 .up.lg{width:40px;height:40px;font-size:22px;flex:none;animation:ring 1.3s ease-out infinite}
 @keyframes ring{0%{box-shadow:0 0 0 0 #e0824bcc}100%{box-shadow:0 0 0 16px #e0824b00}}
 .mock{display:flex;align-items:flex-end;gap:12px;background:#14110f;border-radius:18px;padding:12px 12px 12px 16px;box-shadow:inset 0 0 0 1px var(--line)}
-.mt{flex:1;font-size:14px;line-height:1.35;color:var(--ink);max-height:57px;overflow:hidden}
+.mt{flex:1;font-size:14px;line-height:1.35;max-height:57px;overflow:hidden}
 .cap{font-size:13px;color:var(--dim);text-align:right;margin:6px 4px 14px}
 .fine{font-size:13px;color:var(--dim);text-align:center;margin-top:10px}
-.sheet .btn{width:100%}
-.sheet .x{position:absolute;right:14px;top:10px;background:none;color:var(--dim);font-size:22px;padding:8px}
-.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,80px);background:var(--sun);color:#221a05;font-weight:800;padding:10px 16px;border-radius:99px;transition:transform .25s;z-index:20;white-space:nowrap;font-size:15px}
+.sheet .openb{display:block;text-align:center;text-decoration:none;font-weight:800;border-radius:14px;padding:15px;background:var(--hot);color:#1c0d02}
+.sheet .x{position:absolute;right:-8px;top:-10px;background:none;color:var(--dim);font-size:22px;padding:8px}
+.toast{position:fixed;left:50%;bottom:104px;transform:translate(-50%,200px);background:var(--sun);color:#221a05;font-weight:800;padding:10px 16px;border-radius:99px;transition:transform .25s;z-index:20;white-space:nowrap;font-size:15px}
 .toast.on{transform:translate(-50%,0)}
-.hd{display:flex;justify-content:space-between;align-items:baseline}
-.skip{font-size:13px;font-weight:700;color:var(--dim);text-decoration:none;padding:16px 0 6px}
-.skip b{color:var(--sun)}
-.rail{position:sticky;top:0;z-index:5;background:var(--bg);margin:0 -18px 8px;padding:8px 18px;display:flex;gap:6px}
-.rail a{flex:1;text-align:center;font-size:12px;font-weight:800;color:var(--dim);text-decoration:none;padding:7px 2px;border-radius:99px;box-shadow:inset 0 0 0 1px var(--line);white-space:nowrap}
-.rail a.on{background:var(--hot);color:#1c0d02;box-shadow:none}
-.rail a.done::before{content:"✓ "}
-section{scroll-margin-top:52px}
-.kicker{font-size:12px;font-weight:800;letter-spacing:.18em;color:var(--hot);margin-bottom:10px}
-h3.pick{font-size:22px;font-weight:800;letter-spacing:-.01em;margin-top:30px}
-.next{display:block;width:100%;margin-top:22px}
-.tabs{display:flex;gap:8px;margin-top:14px}
-.tab{flex:1;background:transparent;color:var(--dim);box-shadow:inset 0 0 0 2px var(--line);padding:11px 8px;font-size:15px}
-.tab.on{background:var(--ink);color:#14110f;box-shadow:none}
-.card[hidden]{display:none}
-.after{font-size:14px;margin-top:14px}
-.after a,.back a{color:var(--sun);font-weight:700;text-decoration:none}
-.says{display:grid;gap:10px;margin:18px 0}
-.say{display:flex;align-items:center;gap:10px;background:var(--panel);border-radius:16px 16px 16px 4px;padding:9px 9px 9px 16px;box-shadow:inset 0 0 0 1px var(--line)}
-.say span{flex:1;font-size:17px;color:var(--ink)}
-.say button{padding:9px 14px;font-size:14px;border-radius:10px;min-width:86px}
-.say button.ok{background:var(--sun)}
-.wall{list-style:none;padding:0;margin:16px 0;display:grid;gap:9px}
-.wall li{padding-left:28px;position:relative;color:var(--ink)}
-.wall li::before{content:"✕";position:absolute;left:2px;color:var(--hot);font-weight:800}
-.back{font-size:14px;text-align:center;margin-top:14px}
-.linkbtn{background:none;color:var(--sun);font-size:14px;font-weight:700;padding:6px}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="hd"><div class="mark">BUILD CAMP</div><a class="skip" href="next.html">Already code? <b>Hard mode →</b></a></div>
-  <nav class="rail" id="rail" aria-label="Steps">
-    <a href="#play" data-step="play" class="on">1 Play</a>
-    <a href="#build" data-step="build">2 Build</a>
-    <a href="#boss" data-step="boss">3 Boss it</a>
-    <a href="#big" data-step="big">4 Go big</a>
-  </nav>
-  <div id="play"></div>
-  <h1>Dodge the cows.</h1>
-  <p class="sub">Hold left or right to steer. It gets faster.</p>
+<div class="app">
+  <header>
+    <div class="hd"><div class="mark">BUILD CAMP</div><a class="skip" href="next.html">Hard mode →</a></div>
+    <div class="prog" id="prog" role="progressbar" aria-valuemin="1" aria-valuemax="5"><i></i><i></i><i></i><i></i><i></i></div>
+  </header>
 
-  <div class="stage" id="stage">
-    <canvas id="game" aria-label="Game: steer a truck around cows on a desert highway"></canvas>
-    <div class="banner" id="banner" hidden></div>
-    <div class="ov" id="ovStart">
-      <div class="big pulse">TAP TO DRIVE</div>
-      <div class="hint">Hold the left or right side to steer<br>(or use the arrow keys)</div>
-    </div>
-    <div class="ov" id="ovOver" hidden>
-      <div class="big" id="overTitle">MOO.</div>
-      <div class="score">You scored <b id="overScore">0</b></div>
-      <div class="hint" id="overBest"></div>
-      <div class="row">
-        <button id="again">Play again</button>
-        <a class="btn ghost" href="#build">How was this made?</a>
+  <main id="main">
+    <section class="screen" id="s1">
+      <div class="kicker">STEP 1 OF 5 · PLAY</div>
+      <h1>Dodge the cows.</h1>
+      <div class="stage" id="stage">
+        <canvas id="game" aria-label="Game: steer a truck around cows on a desert highway"></canvas>
+        <div class="banner" id="banner" hidden></div>
+        <div class="ov" id="ovStart">
+          <div class="big pulse">TAP TO DRIVE</div>
+          <div class="hint">Hold the left or right side to steer</div>
+        </div>
+        <div class="ov" id="ovOver" hidden>
+          <div class="big" id="overTitle">MOO.</div>
+          <div class="score">You scored <b id="overScore">0</b></div>
+          <div class="hint" id="overBest"></div>
+          <button id="again" class="ghostb">Play again</button>
+          <button id="share" class="linkb">Challenge someone to beat it</button>
+        </div>
       </div>
-      <button id="share" class="linkbtn">Challenge someone to beat your score</button>
-    </div>
-  </div>
+    </section>
 
-  <section id="build">
-    <div class="kicker">STEP 2 · BUILD YOUR OWN</div>
-    <h2>Nobody coded that game.</h2>
-    <p>An AI wrote every line. The instructions were plain English:</p>
-    <div class="bubble">Make me a game that works on my phone: I'm a truck dodging cows on a desert highway. It speeds up over time. Show my high score.</div>
-    <p><strong>That's the whole skill.</strong> Say what you want, then boss it around until it's right. <strong>Now you.</strong></p>
+    <section class="screen" id="s2">
+      <div class="kicker">STEP 2 OF 5 · THE TRICK</div>
+      <h1>Nobody coded that game.</h1>
+      <p class="lead">An AI wrote every line. This is all it was told:</p>
+      <div class="bubble">Make me a game that works on my phone: I'm a truck dodging cows on a desert highway. It speeds up over time. Show my high score.</div>
+      <p class="lead"><strong>That's the whole skill.</strong> Say what you want in plain English.</p>
+    </section>
 
-    <h3 class="pick">Pick one. It takes five minutes.</h3>
-    <div class="tabs" role="tablist">
-      <button class="tab on" data-tab="easy" role="tab">Quick wins</button>
-      <button class="tab" data-tab="hard" role="tab">Harder builds</button>
-    </div>
-    <div class="cards">
-      <button class="card top" data-set="easy" data-prompt="Ask me 3 quick questions about what I'm into, one at a time. Then build me a small game or tool based on my answers that works on my phone.">
-        <span class="em">🎲</span><span><span class="t">Surprise me</span><span class="d">It asks what you're into, then builds something for you</span></span><span class="go">›</span>
-      </button>
-      <button class="card" data-set="easy" data-prompt="Make me a game that works on my phone: I'm a truck dodging cows on a desert highway. Hold left or right to steer, it speeds up over time, show my high score. When it's done, ask me what I want to change.">
-        <span class="em">🛻</span><span><span class="t">Remix the cow game</span><span class="d">Build your own version, then change everything</span></span><span class="go">›</span>
-      </button>
-      <button class="card" data-set="easy" data-prompt="Make a reaction-time test that works on my phone so I can challenge my friends. Big button, five rounds, average time at the end, and a rank from sloth to fighter pilot.">
-        <span class="em">⚡</span><span><span class="t">Reaction test</span><span class="d">Find out which of your friends is slowest</span></span><span class="go">›</span>
-      </button>
-      <button class="card" data-set="easy" data-prompt="Build me a tool that works on my phone where I enter a used car's price, year and miles and it tells me if it's a good deal, with a color-coded verdict and the reasons why.">
-        <span class="em">💸</span><span><span class="t">Good deal or rip-off?</span><span class="d">A used car deal checker</span></span><span class="go">›</span>
-      </button>
-      <button class="card top" data-set="hard" hidden data-prompt="I want to build something of my own. Ask me questions one at a time until you understand what I want. Then show me your plan in 3 bullet points, and build it for my phone once I say go.">
-        <span class="em">🧠</span><span><span class="t">Your own idea</span><span class="d">It interviews you, shows a plan, then builds it</span></span><span class="go">›</span>
-      </button>
-      <button class="card" data-set="hard" hidden data-prompt="Make a two-player game we can play on one phone, with each player using one half of the screen. First to 5 points wins. Ask me what kind of game I want before you build it.">
-        <span class="em">🥊</span><span><span class="t">Two-player duel</span><span class="d">One phone, two players, first to five</span></span><span class="go">›</span>
-      </button>
-      <button class="card" data-set="hard" hidden data-prompt="Build a beat maker that works on my phone: a grid of 4 drum sounds by 16 steps, play and stop buttons, a tempo slider and a clear button. Make the sounds in code, with no audio files.">
-        <span class="em">🥁</span><span><span class="t">Beat maker</span><span class="d">A drum machine you can actually play</span></span><span class="go">›</span>
-      </button>
-    </div>
-    <p class="after">Tap one. Claude opens with the instructions already typed in. Hit the <span class="up">↑</span> button and it starts building. Free to try.</p>
-    <a class="btn ghost next" href="#boss">Built something? Step 3 ↓</a>
-  </section>
+    <section class="screen" id="s3">
+      <div class="kicker">STEP 3 OF 5 · BUILD</div>
+      <h1>Your turn. Pick one.</h1>
+      <p class="lead">Claude opens with it already typed in. You hit <span class="up">↑</span>.</p>
+      <div class="tabs" role="tablist">
+        <button class="tab on" data-tab="easy" role="tab">Quick wins</button>
+        <button class="tab" data-tab="hard" role="tab">Harder builds</button>
+      </div>
+      <div class="cards">
+        <button class="card" data-set="easy" data-prompt="Ask me 3 quick questions about what I'm into, one at a time. Then build me a small game or tool based on my answers that works on my phone.">
+          <span class="em">🎲</span><span><span class="t">Surprise me</span><span class="d">It asks what you're into, then builds it</span></span><span class="go">›</span>
+        </button>
+        <button class="card" data-set="easy" data-prompt="Make me a game that works on my phone: I'm a truck dodging cows on a desert highway. Hold left or right to steer, it speeds up over time, show my high score. When it's done, ask me what I want to change.">
+          <span class="em">🛻</span><span><span class="t">Remix the cow game</span><span class="d">Your own version of what you just played</span></span><span class="go">›</span>
+        </button>
+        <button class="card" data-set="easy" data-prompt="Make a reaction-time test that works on my phone so I can challenge my friends. Big button, five rounds, average time at the end, and a rank from sloth to fighter pilot.">
+          <span class="em">⚡</span><span><span class="t">Reaction test</span><span class="d">Find out which friend is slowest</span></span><span class="go">›</span>
+        </button>
+        <button class="card" data-set="hard" hidden data-prompt="I want to build something of my own. Ask me questions one at a time until you understand what I want. Then show me your plan in 3 bullet points, and build it for my phone once I say go.">
+          <span class="em">🧠</span><span><span class="t">Your own idea</span><span class="d">It interviews you, plans it, then builds it</span></span><span class="go">›</span>
+        </button>
+        <button class="card" data-set="hard" hidden data-prompt="Make a two-player game we can play on one phone, with each player using one half of the screen. First to 5 points wins. Ask me what kind of game I want before you build it.">
+          <span class="em">🥊</span><span><span class="t">Two-player duel</span><span class="d">One phone, two players, first to five</span></span><span class="go">›</span>
+        </button>
+        <button class="card" data-set="hard" hidden data-prompt="Build a beat maker that works on my phone: a grid of 4 drum sounds by 16 steps, play and stop buttons, a tempo slider and a clear button. Make the sounds in code, with no audio files.">
+          <span class="em">🥁</span><span><span class="t">Beat maker</span><span class="d">A drum machine you can actually play</span></span><span class="go">›</span>
+        </button>
+      </div>
+    </section>
 
-  <section id="boss">
-    <div class="kicker">STEP 3 · BOSS IT AROUND</div>
-    <h2>Now change it. Just say so.</h2>
-    <p>Go back to your Claude chat and type what you want different. Out of ideas? <strong>Copy one of these and paste it in:</strong></p>
-    <div class="says">
-      <div class="say"><span>make it harder</span><button>Copy</button></div>
-      <div class="say"><span>make it look like an 80s arcade</span><button>Copy</button></div>
-      <div class="say"><span>add a second player</span><button>Copy</button></div>
-      <div class="say"><span>put my name on it</span><button>Copy</button></div>
-    </div>
-    <p>It rebuilds while you watch. If it breaks, tell it what broke. Catching it when it's wrong is half the skill.</p>
-    <a class="btn ghost next" href="#big">Next: where this gets serious ↓</a>
-  </section>
+    <section class="screen" id="s4">
+      <div class="kicker">STEP 4 OF 5 · BOSS IT AROUND</div>
+      <h1>Now change it. Just say so.</h1>
+      <p class="lead">In your Claude chat, type what you want different. Out of ideas? Copy one and paste it in:</p>
+      <div class="says">
+        <div class="say"><span>make it harder</span><button>Copy</button></div>
+        <div class="say"><span>make it look like an 80s arcade</span><button>Copy</button></div>
+        <div class="say"><span>add a second player</span><button>Copy</button></div>
+      </div>
+      <p class="foot">If it breaks, tell it what broke. Catching it when it's wrong is half the skill.</p>
+    </section>
 
-  <section id="big">
-    <div class="kicker">STEP 4 · GO BIG</div>
-    <h2>Here's the catch.</h2>
-    <p>What you just built lives inside a chat. It's the toy version.</p>
-    <ul class="wall">
-      <li>It can't be a Discord bot</li>
-      <li>It can't run by itself every morning</li>
-      <li>It can't be a website at your own address</li>
-      <li>It can't work with the files on your computer</li>
-    </ul>
-    <p><strong>The real tools can.</strong> Same skill: say what you want, boss it around. Here's what you'd build:</p>
-    <ul class="levels">
-      <li><span class="n">LVL 1</span><span>Your own website, live on the internet</span></li>
-      <li><span class="n">LVL 2</span><span>A Discord bot or app your friends actually use</span></li>
-      <li><span class="n">LVL 3</span><span>Something that runs by itself every day</span></li>
-      <li><span class="n">LVL 4</span><span>Tools for real places: a house, a shop, a ranch</span></li>
-    </ul>
-    <a class="btn next" href="next.html">Take me to hard mode →</a>
-    <p class="back">Needs a laptop and about 15 minutes. Not yet? <a href="#build">Build another one first ↑</a></p>
-  </section>
+    <section class="screen" id="s5">
+      <div class="kicker">STEP 5 OF 5 · GO BIG</div>
+      <h1>Here's the catch.</h1>
+      <p class="lead">What you built lives inside a chat. That's the toy version. It can't:</p>
+      <ul class="wall">
+        <li>be a Discord bot</li>
+        <li>run by itself every morning</li>
+        <li>be a website at your own address</li>
+        <li>work with the files on your computer</li>
+      </ul>
+      <p class="lead"><strong>The real tools can.</strong> Same skill, a laptop, and about 15 minutes of setup.</p>
+    </section>
+  </main>
 
-  <footer>Made something? Send it to whoever sent you this.</footer>
+  <nav class="bar">
+    <a class="backb" id="back" href="#s1" hidden>‹ Back</a>
+    <a class="nextb" id="next" href="#s2">Next →</a>
+  </nav>
 </div>
 
 <div class="sheet" id="sheet" role="dialog" aria-labelledby="sheetT">
@@ -219,11 +218,11 @@ h3.pick{font-size:22px;font-weight:800;letter-spacing:-.01em;margin-top:30px}
     <ol>
       <li>Tap <b>Open Claude</b> below. Sign in if it asks; it's free.</li>
       <li>Your instructions are already typed in. <b>Tap the <span class="up">↑</span> button to send them.</b></li>
-      <li>It builds while you watch. Then play it.</li>
+      <li>It builds while you watch. Then come back here.</li>
     </ol>
     <div class="mock" aria-hidden="true"><div class="mt" id="sheetP"></div><span class="up lg">↑</span></div>
     <div class="cap">What you'll see in Claude. Tap the arrow.</div>
-    <a class="btn" id="sheetGo" target="_blank" rel="noopener">Open Claude →</a>
+    <a class="openb" id="sheetGo" target="_blank" rel="noopener">Open Claude →</a>
     <div class="fine" id="sheetFine"></div>
   </div>
 </div>
@@ -233,13 +232,40 @@ h3.pick{font-size:22px;font-weight:800;letter-spacing:-.01em;margin-top:30px}
 (() => {
 'use strict';
 const $ = id => document.getElementById(id);
+const store = { get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } },
+                set(k,v){ try { localStorage.setItem(k,v); } catch(e){} } };
+
+/* ---------- steps: one screen at a time, one next action ---------- */
+const STEPS = 5;
+const NEXT = ['Next: how was this made? →', 'Next: build your own →', 'Built it? Next →', 'Next: the catch →', 'Take me to hard mode →'];
+let cur = 1, done = [];
+try { done = JSON.parse(store.get('bc_done') || '[]'); } catch(e){}
+function mark(n){ if (!done.includes(n)) { done.push(n); store.set('bc_done', JSON.stringify(done)); } paintNext(); }
+function paintNext(){
+  // steps 1 and 3 ask them to do something first; the button lights up once they have
+  const ready = (cur === 1 || cur === 3) ? done.includes(cur) : true;
+  $('next').classList.toggle('go', ready);
+}
+function show(){
+  const n = Math.max(1, Math.min(STEPS, parseInt((location.hash.match(/^#s(\d)$/) || [])[1], 10) || 1));
+  if (cur === 1 && n !== 1 && state === 'play') { state = 'ready'; $('ovStart').hidden = false; }
+  cur = n;
+  for (let i = 1; i <= STEPS; i++) $('s' + i).classList.toggle('on', i === n);
+  [...$('prog').children].forEach((el, i) => el.classList.toggle('f', i < n));
+  $('prog').setAttribute('aria-valuenow', n);
+  $('back').hidden = n === 1; $('back').href = '#s' + (n - 1);
+  $('next').textContent = NEXT[n - 1];
+  $('next').href = n === STEPS ? 'next.html' : '#s' + (n + 1);
+  paintNext(); $('main').scrollTop = 0; $('sheet').classList.remove('on');
+}
+addEventListener('hashchange', show);
+
+/* ---------- step 1: the game ---------- */
 const cv = $('game'), ctx = cv.getContext('2d'), stage = $('stage');
 const W = 360, H = 540, RL = 48, RR = W - 48, TW = 34, TH = 60, TY = H - 96;
 const dpr = Math.min(window.devicePixelRatio || 1, 3);
 cv.width = W * dpr; cv.height = H * dpr; ctx.scale(dpr, dpr);
-
-const store = { get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } },
-                set(k,v){ try { localStorage.setItem(k,v); } catch(e){} } };
+const FONT = '"Plus Jakarta Sans",system-ui,sans-serif';
 let state = 'ready', t = 0, speed = 230, score = 0, best = +store.get('bc_best') || 0;
 let cows = [], pops = [], deco = [], spawnT = 0, truckX = W/2, dir = 0, scroll = 0, shake = 0, last = 0;
 
@@ -254,7 +280,7 @@ for (let i = 0; i < 9; i++) deco.push({ x: i % 2 ? 8 + Math.random()*24 : W - 32
 function reset(){ t = 0; speed = 230; score = 0; cows = []; pops = []; spawnT = 0.7; truckX = W/2; shake = 0; }
 function start(){ reset(); state = 'play'; $('ovStart').hidden = true; $('ovOver').hidden = true; }
 function crash(){
-  state = 'over'; shake = 0.45; if (window.__mark) window.__mark('play');
+  state = 'over'; shake = 0.45;
   const s = Math.floor(score), isBest = s > best;
   if (isBest) { best = s; store.set('bc_best', String(s)); }
   $('overScore').textContent = s.toLocaleString();
@@ -262,7 +288,7 @@ function crash(){
   $('overBest').textContent = beat && s > beat ? 'You beat ' + (from || 'them') + ' by ' + (s - beat).toLocaleString() + '.'
     : beat ? (beat - s + 1).toLocaleString() + ' more to beat ' + (from || 'them') + '.'
     : isBest ? 'New best!' : 'Your best: ' + best.toLocaleString();
-  setTimeout(() => { if (state === 'over') $('ovOver').hidden = false; }, 550);
+  setTimeout(() => { if (state === 'over') { $('ovOver').hidden = false; mark(1); } }, 550);
 }
 
 function spawn(){
@@ -274,8 +300,9 @@ function spawn(){
 }
 
 function update(dt){
-  scroll += (state === 'play' ? speed : 70) * dt;
-  for (const d of deco) { d.y += (state === 'play' ? speed : 70) * dt; if (d.y > H + 20) { d.y = -20; d.x = Math.random() < 0.5 ? 8 + Math.random()*24 : W - 32 + Math.random()*24; } }
+  const v = state === 'play' ? speed : 70;
+  scroll += v * dt;
+  for (const d of deco) { d.y += v * dt; if (d.y > H + 20) { d.y = -20; d.x = Math.random() < 0.5 ? 8 + Math.random()*24 : W - 32 + Math.random()*24; } }
   if (shake > 0) shake -= dt;
   for (const p of pops) { p.life -= dt; p.y -= 40 * dt; }
   pops = pops.filter(p => p.life > 0);
@@ -326,24 +353,24 @@ function draw(){
   ctx.font = '34px serif';
   for (const c of cows) { ctx.fillStyle = '#0005'; ctx.beginPath(); ctx.ellipse(c.x, c.y + 14, 16, 5, 0, 0, 7); ctx.fill(); ctx.fillStyle = '#000'; ctx.fillText('🐄', c.x, c.y); }
   drawTruck(truckX, TY);
-  ctx.font = '800 15px "Plus Jakarta Sans",system-ui,sans-serif';
-  for (const p of pops) { ctx.globalAlpha = Math.min(1, p.life * 2); ctx.fillStyle = '#d99a36'; ctx.fillText(p.text, p.x, p.y); }
+  ctx.font = '800 15px ' + FONT;
+  for (const p of pops) { ctx.globalAlpha = Math.min(1, p.life * 2); ctx.fillStyle = '#ffe08a'; ctx.fillText(p.text, p.x, p.y); }
   ctx.globalAlpha = 1;
   ctx.restore();
-  ctx.font = '900 22px "Plus Jakarta Sans",system-ui,sans-serif'; ctx.textBaseline = 'top'; ctx.shadowColor = '#000a'; ctx.shadowBlur = 6;
+  ctx.font = '800 22px ' + FONT; ctx.textBaseline = 'top'; ctx.shadowColor = '#000a'; ctx.shadowBlur = 6;
   ctx.fillStyle = '#fff'; ctx.textAlign = 'left'; ctx.fillText(Math.floor(score).toLocaleString(), 12, 10);
-  ctx.font = '800 13px "Plus Jakarta Sans",system-ui,sans-serif'; ctx.textAlign = 'right'; ctx.fillStyle = '#d99a36';
+  ctx.font = '800 13px ' + FONT; ctx.textAlign = 'right'; ctx.fillStyle = '#ffe08a';
   ctx.fillText('BEST ' + Math.max(best, Math.floor(score)).toLocaleString(), W - 12, 14);
   ctx.shadowBlur = 0;
 }
 
 function loop(now){
   const dt = Math.min(0.05, (now - last) / 1000 || 0); last = now;
-  update(dt); draw(); requestAnimationFrame(loop);
+  if (cur === 1) { update(dt); draw(); }
+  requestAnimationFrame(loop);
 }
 requestAnimationFrame(loop);
 
-// input
 const steer = e => { const r = stage.getBoundingClientRect(); dir = (e.clientX - r.left) < r.width / 2 ? -1 : 1; };
 stage.addEventListener('pointerdown', e => {
   if (e.target.closest('button,a')) return;
@@ -353,6 +380,7 @@ stage.addEventListener('pointerdown', e => {
 stage.addEventListener('pointermove', e => { if (state === 'play' && e.buttons) steer(e); });
 for (const ev of ['pointerup', 'pointercancel']) stage.addEventListener(ev, () => { dir = 0; });
 addEventListener('keydown', e => {
+  if (cur !== 1) return;
   const k = e.key;
   if (k === 'ArrowLeft' || k === 'a') { dir = -1; if (state === 'play') e.preventDefault(); }
   else if (k === 'ArrowRight' || k === 'd') { dir = 1; if (state === 'play') e.preventDefault(); }
@@ -361,15 +389,14 @@ addEventListener('keydown', e => {
 addEventListener('keyup', e => { if (['ArrowLeft','ArrowRight','a','d'].includes(e.key)) dir = 0; });
 $('again').addEventListener('click', start);
 
-// toast + clipboard
+/* ---------- shared: toast + clipboard ---------- */
 let toastT;
-function toast(msg){ const el = $('toast'); el.textContent = msg; el.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => el.classList.remove('on'), 2200); }
+function toast(msg){ const el = $('toast'); el.textContent = msg; el.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => el.classList.remove('on'), 2400); }
 async function copy(text){
   try { await navigator.clipboard.writeText(text); return true; } catch(e){}
   try { const ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); const ok = document.execCommand('copy'); ta.remove(); return ok; } catch(e){ return false; }
 }
 
-// challenge
 $('share').addEventListener('click', async () => {
   let name = store.get('bc_name');
   if (name === null) { name = (prompt('Your name, so they know who to beat:') || '').trim().slice(0, 16); store.set('bc_name', name); }
@@ -380,58 +407,40 @@ $('share').addEventListener('click', async () => {
   toast(await copy(text + ' ' + url) ? 'Link copied. Send it to them.' : 'Could not copy the link');
 });
 
-// prompt cards
+/* ---------- step 3: pick one, hand off to Claude, come back ---------- */
 const sheet = $('sheet');
-document.querySelectorAll('.card').forEach(b => b.addEventListener('click', async () => {
-  const p = b.dataset.prompt, ok = await copy(p);
-  $('sheetFine').textContent = ok ? 'Box empty when Claude opens? Just paste. The instructions are already copied.' : 'Box empty when Claude opens? Come back and tap the card again.';
-  $('sheetP').textContent = p;
-  $('sheetGo').href = 'https://claude.ai/new?q=' + encodeURIComponent(p);
-  sheet.classList.add('on');
-}));
-$('sheetX').addEventListener('click', () => sheet.classList.remove('on'));
-// progress rail
-const railLinks = [...document.querySelectorAll('#rail a')];
-let done = []; try { done = JSON.parse(store.get('bc_done') || '[]'); } catch(e){}
-const paint = () => railLinks.forEach(a => a.classList.toggle('done', done.includes(a.dataset.step)));
-function mark(step){ if (!done.includes(step)) { done.push(step); store.set('bc_done', JSON.stringify(done)); paint(); } }
-paint(); window.__mark = mark;
-const anchors = railLinks.map(a => document.getElementById(a.dataset.step));
-function spy(){
-  let cur = 0; anchors.forEach((el, i) => { if (el.getBoundingClientRect().top <= 140) cur = i; });
-  if (innerHeight + scrollY >= document.documentElement.scrollHeight - 4) cur = anchors.length - 1;
-  railLinks.forEach((a, i) => a.classList.toggle('on', i === cur));
-}
-addEventListener('scroll', spy, { passive: true }); spy();
-
-// quick wins / harder builds
 document.querySelectorAll('.tab').forEach(tb => tb.addEventListener('click', () => {
   document.querySelectorAll('.tab').forEach(x => x.classList.toggle('on', x === tb));
   document.querySelectorAll('.card').forEach(c => { c.hidden = c.dataset.set !== tb.dataset.tab; });
 }));
-
-// leaving for Claude, and coming back
+document.querySelectorAll('.card').forEach(b => b.addEventListener('click', async () => {
+  const p = b.dataset.prompt, ok = await copy(p);
+  $('sheetP').textContent = p;
+  $('sheetFine').textContent = ok ? 'Box empty when Claude opens? Just paste. The instructions are already copied.' : 'Box empty when Claude opens? Come back and tap the card again.';
+  $('sheetGo').href = 'https://claude.ai/new?q=' + encodeURIComponent(p);
+  sheet.classList.add('on');
+}));
+$('sheetX').addEventListener('click', () => sheet.classList.remove('on'));
 let away = false;
-$('sheetGo').addEventListener('click', () => { mark('build'); away = true; });
+$('sheetGo').addEventListener('click', () => { mark(3); away = true; });
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState !== 'visible' || !away) return;
-  away = false; sheet.classList.remove('on');
-  document.getElementById('boss').scrollIntoView({ behavior: 'smooth' });
-  toast('Welcome back. Step 3: change it.');
+  away = false; location.hash = 's4'; toast('Welcome back. Now change it.');
 });
 
-// step 3 copy rows
+/* ---------- step 4: copy rows ---------- */
 document.querySelectorAll('.say').forEach(row => {
   const btn = row.querySelector('button');
   btn.addEventListener('click', async () => {
     const ok = await copy(row.querySelector('span').textContent);
-    btn.textContent = ok ? 'Copied ✓' : 'Type it'; btn.classList.add('ok'); mark('boss');
+    btn.textContent = ok ? 'Copied ✓' : 'Type it'; btn.classList.add('ok');
     toast(ok ? 'Copied. Paste it in your Claude chat.' : 'Type that into your Claude chat');
     setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('ok'); }, 2500);
   });
 });
 
-window.__game = { get state(){ return state; }, get score(){ return Math.floor(score); }, get cows(){ return cows.length; }, get truckX(){ return truckX; } };
+show();
+window.__game = { get state(){ return state; }, get score(){ return Math.floor(score); }, get cows(){ return cows.length; }, get truckX(){ return truckX; }, get step(){ return cur; } };
 })();
 </script>
 </body>
