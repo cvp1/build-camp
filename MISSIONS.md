@@ -1,7 +1,8 @@
 # Missions
 
-Each mission ships something real and teaches one habit. Don't skip ahead; each habit
-is what makes the next mission possible. Pick projects **you** actually want — the
+Each mission ships something real and teaches one habit. Your first session starts with
+an interview; Claude uses it to fill in a project for each mission in `PROGRESS.md`. Don't skip ahead; each habit
+is what makes the next mission possible. Pick projects **you** actually want; the
 examples are just examples.
 
 | # | Mission | You ship | The habit |
