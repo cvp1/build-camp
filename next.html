@@ -3,73 +3,190 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Hard mode: the real tools</title>
-<meta name="description" content="Three steps to an AI coach that builds real things with you.">
-<meta property="og:title" content="Hard mode: the real tools">
-<meta property="og:description" content="Three steps to an AI coach that builds real things with you.">
+<title>Hard mode unlocked</title>
+<meta name="description" content="The AI gets hands. Three steps to a coach that builds real things with you.">
+<meta property="og:title" content="Hard mode unlocked">
+<meta property="og:description" content="The AI gets hands. Three steps to a coach that builds real things with you.">
 <meta property="og:image" content="https://cvp1.github.io/build-camp/og.png">
-<meta name="theme-color" content="#f3efe6">
+<meta name="theme-color" content="#151311">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐄</text></svg>">
 <style>
 @font-face{font-family:'Inter';src:url('fonts/inter.woff2') format('woff2');font-weight:400 800;font-style:normal;font-display:swap}
-:root{--bg:#f3efe6;--panel:#fffdf9;--ink:#1b1815;--dim:#6b635a;--hot:#1b1815;--sun:#9a5540;--line:rgba(27,24,21,.10)}
+:root{--bg:#f3efe6;--panel:#fffdf9;--ink:#1b1815;--dim:#6b635a;--sun:#9a5540;--glow:#d9876d;--night:#151311;--line:rgba(27,24,21,.10)}
 *{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--ink);font:17px/1.5 'Inter',system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
-.wrap{max-width:460px;margin:0 auto;padding:0 18px 60px}
-.mark{font-size:12px;font-weight:800;letter-spacing:.22em;color:var(--hot);padding:16px 0 6px;display:block;text-decoration:none}
-h1{font-size:clamp(34px,10vw,46px);font-weight:800;line-height:1;letter-spacing:-.02em;margin-bottom:12px}
-p{color:var(--dim)}
-p strong{color:var(--ink)}
-.step{background:var(--panel);border-radius:18px;padding:18px;margin-top:16px;box-shadow:0 1px 2px rgba(0,0,0,.05),0 0 0 1px rgba(27,24,21,.09)}
-.step .n{font-weight:800;color:var(--sun);font-size:13px;letter-spacing:.1em}
-.step h2{font-size:24px;font-weight:800;letter-spacing:-.01em;margin:2px 0 6px}
-.btn{font-weight:700;border-radius:99px;padding:13px 18px;background:var(--hot);color:#fffdf9;text-decoration:none;display:inline-block;margin-top:12px}
-.say{background:#f3efe6;border-radius:12px;padding:12px 14px;margin-top:12px;color:var(--ink);font-size:16px}
-code{background:#f3efe6;border-radius:6px;padding:2px 7px;color:var(--sun);font-size:16px}
-.small{font-size:14px;margin-top:10px}
-.note{margin-top:28px;font-size:15px}
-.lv{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:8px;font-size:15px;color:var(--ink)}
-.lv b{color:var(--sun);font-size:12px;letter-spacing:.1em;margin-right:8px}
+.wrap{max-width:460px;margin:0 auto;padding:0 18px 64px}
+a{color:inherit}
+
+/* ---------- hero: the unlock ---------- */
+.hero{background:var(--night);color:#f3efe6;padding:16px 18px 30px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:-40% -30% auto;height:420px;background:radial-gradient(closest-side,#9a554055,transparent);pointer-events:none}
+.hero .in{max-width:424px;margin:0 auto;position:relative}
+.back{font-size:12px;font-weight:800;letter-spacing:.22em;color:#cfc6b8;text-decoration:none}
+.badge{display:inline-flex;align-items:center;gap:8px;margin-top:26px;font-size:12px;font-weight:800;letter-spacing:.2em;color:var(--glow);border:1px solid #9a554088;padding:6px 12px;border-radius:99px;opacity:0;animation:pop .5s .15s ease forwards}
+.badge i{width:7px;height:7px;border-radius:50%;background:var(--glow);box-shadow:0 0 10px var(--glow);animation:blink 1.4s infinite}
+h1{font-size:clamp(52px,17vw,76px);font-weight:800;line-height:.92;letter-spacing:-.05em;margin-top:14px;opacity:0;animation:rise .6s .3s cubic-bezier(.2,.9,.3,1) forwards}
+.hero p{color:#cfc6b8;font-size:18px;line-height:1.45;margin-top:14px;opacity:0;animation:rise .6s .5s ease forwards}
+.hero p b{color:#f3efe6}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes pop{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:none}}
+@keyframes blink{50%{opacity:.35}}
+
+/* terminal: what the first minute looks like */
+.term{margin-top:24px;background:#0c0b0a;border-radius:14px;box-shadow:0 0 0 1px #ffffff14,0 24px 60px -20px #000;overflow:hidden;opacity:0;animation:rise .6s .75s ease forwards}
+.tbar{display:flex;gap:6px;padding:10px 12px;border-bottom:1px solid #ffffff10}
+.tbar i{width:10px;height:10px;border-radius:50%;background:#3a3633}
+.tbar span{margin-left:auto;font:600 11px ui-monospace,Menlo,monospace;color:#7d756b}
+.tbody{padding:14px 14px 16px;font:14px/1.55 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:#e9e2d6;min-height:212px}
+.tbody .p{color:#7d756b}.tbody .you{color:#e9e2d6}.tbody .coach{color:#f0c7b6}
+.tbody .c{display:inline-block;width:8px;height:15px;background:#f0c7b6;vertical-align:-2px;animation:blink 1s steps(1) infinite}
+.tbody .ln{display:block;min-height:1.55em}
+
+/* ---------- body sections ---------- */
+.kick{font-size:12px;font-weight:800;letter-spacing:.2em;color:var(--sun);margin:40px 0 6px}
+h2{font-size:30px;font-weight:800;letter-spacing:-.035em;line-height:1.05}
+.lead{color:var(--dim);margin-top:8px}
+
+.steps{list-style:none;padding:0;margin:18px 0 0;position:relative}
+.steps::before{content:"";position:absolute;left:21px;top:30px;bottom:30px;width:2px;background:repeating-linear-gradient(var(--line) 0 6px,transparent 6px 12px)}
+.steps li{position:relative;padding-left:58px;margin-bottom:16px}
+.num{position:absolute;left:0;top:14px;width:44px;height:44px;border-radius:50%;background:var(--ink);color:#fffdf9;display:grid;place-items:center;font-weight:800;font-size:18px;box-shadow:0 0 0 6px var(--bg)}
+.card{background:var(--panel);border-radius:18px;padding:16px 18px;box-shadow:0 1px 2px rgba(0,0,0,.05),0 0 0 1px rgba(27,24,21,.09)}
+.card h3{font-size:20px;font-weight:800;letter-spacing:-.02em}
+.card p{color:var(--dim);font-size:15.5px;margin-top:4px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:16px;border-radius:99px;padding:12px 18px;background:var(--ink);color:#fffdf9;text-decoration:none;margin-top:12px}
+code{background:#f3efe6;border-radius:6px;padding:1px 6px;color:var(--sun);font:600 14.5px ui-monospace,Menlo,monospace}
+.say{display:flex;align-items:center;gap:10px;margin-top:12px;background:var(--night);color:#f3efe6;border-radius:12px;padding:11px 14px;font:15px ui-monospace,Menlo,monospace}
+.say span{color:#7d756b}
+
+.os{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}
+.os button{font:inherit;font-size:13px;font-weight:700;border:0;border-radius:99px;padding:7px 12px;background:#f3efe6;color:var(--dim);cursor:pointer}
+.os button.on{background:var(--ink);color:#fffdf9}
+.howto{font-size:15px;color:var(--ink);margin-top:10px;min-height:44px}
+
+/* mission path */
+.path{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:8px}
+.path li{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:center;background:var(--panel);border-radius:14px;padding:10px 14px 10px 10px;box-shadow:0 0 0 1px rgba(27,24,21,.08)}
+.path .m{width:44px;height:44px;border-radius:12px;background:#f3efe6;display:grid;place-items:center;font-size:21px}
+.path b{display:block;font-size:15.5px;letter-spacing:-.01em}
+.path small{display:block;color:var(--dim);font-size:13.5px;line-height:1.3}
+.path .done{background:transparent;box-shadow:0 0 0 1.5px var(--sun)}
+.path .done .m{background:var(--sun);color:#fffdf9;font-size:18px;font-weight:800}
+.path .done small{color:var(--sun);font-weight:600}
+.path .next{box-shadow:0 0 0 2px var(--ink)}
+.path .next small{color:var(--ink);font-weight:600}
+
+.go{display:block;text-align:center;margin-top:28px;font-weight:800;font-size:18px;border-radius:99px;padding:17px;background:var(--ink);color:#fffdf9;text-decoration:none}
+.fine{color:var(--dim);font-size:14.5px;margin-top:22px;line-height:1.45}
+.fine b{color:var(--ink)}
+.fine a{color:var(--sun);font-weight:700;text-decoration:none}
+
+@media (prefers-reduced-motion: reduce){*{animation:none!important;opacity:1!important;transform:none!important}}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <a class="mark" href="./">← BUILD CAMP</a>
-  <h1>Hard mode: the real tools.</h1>
-  <p>So far the AI has built things in a chat window. Now it gets hands: it makes files on your computer, runs them, and fixes what breaks. <strong>You'll need a laptop, a $20-a-month Claude plan, and about half an hour for setup and your first build.</strong></p>
 
-  <div class="step">
-    <span class="n">STEP 1</span>
-    <h2>Get Claude Code</h2>
-    <p>Follow the install step for your computer. It needs a paid Claude plan; the cheapest is Pro, at $20 a month. The free plan doesn't include it.</p>
-    <a class="btn" href="https://code.claude.com/docs/en/overview" target="_blank" rel="noopener">Install Claude Code →</a>
+<header class="hero">
+  <div class="in">
+    <a class="back" href="./">← BUILD CAMP</a><br>
+    <span class="badge"><i></i>LEVEL UP</span>
+    <h1>Hard mode.</h1>
+    <p>Until now the AI built things inside a chat. <b>Now it gets hands.</b> It makes real files on your computer, runs them, sees what breaks, and fixes it. You call the shots.</p>
+    <div class="term" aria-label="What your first minute looks like">
+      <div class="tbar"><i></i><i></i><i></i><span>build-camp-master</span></div>
+      <div class="tbody" id="tb"></div>
+    </div>
   </div>
+</header>
 
-  <div class="step">
-    <span class="n">STEP 2</span>
-    <h2>Download the kit</h2>
-    <p>It's a small folder that turns Claude into a coach. Unzip it somewhere you'll find it again. You'll get a folder called <code>build-camp-master</code>.</p>
-    <a class="btn" href="https://github.com/cvp1/build-camp/archive/refs/heads/master.zip">Download the kit →</a>
-  </div>
+<main class="wrap">
+  <div class="kick">GET SET UP</div>
+  <h2>Three steps. About half an hour.</h2>
+  <p class="lead">You'll need a laptop. By the end you'll have built something that runs.</p>
 
-  <div class="step">
-    <span class="n">STEP 3</span>
-    <h2>Say hello</h2>
-    <p>Open a terminal in the <code>build-camp-master</code> folder, type <code>claude</code> and press Enter. Then say:</p>
-    <div class="say">Let's start.</div>
-    <p class="small"><strong>Mac:</strong> right-click the folder → New Terminal at Folder.<br><strong>Windows 11:</strong> right-click the folder → Open in Terminal.<br><strong>Windows 10:</strong> open the folder, hold Shift, right-click an empty spot → Open PowerShell window here.<br><strong>Chromebook:</strong> in Settings, search for "Linux" and turn on the Linux development environment. Use the Terminal app it adds, and the Linux install steps.</p>
-  </div>
+  <ol class="steps">
+    <li><span class="num">1</span>
+      <div class="card"><h3>Get Claude Code</h3>
+        <p>The tool that gives the AI hands. Follow the install step for your computer.</p>
+        <a class="btn" href="https://code.claude.com/docs/en/overview" target="_blank" rel="noopener">Install Claude Code →</a>
+      </div></li>
+    <li><span class="num">2</span>
+      <div class="card"><h3>Grab the kit</h3>
+        <p>A small folder that turns Claude into your coach. Unzip it and you'll get <code>build-camp-master</code>.</p>
+        <a class="btn" href="https://github.com/cvp1/build-camp/archive/refs/heads/master.zip">Download the kit ↓</a>
+      </div></li>
+    <li><span class="num">3</span>
+      <div class="card"><h3>Say hello</h3>
+        <p>Open a terminal in that folder, type <code>claude</code>, press Enter, then say:</p>
+        <div class="say"><span>&gt;</span>Let's start.</div>
+        <div class="os" role="tablist" aria-label="Your computer">
+          <button data-os="mac">Mac</button><button data-os="win11">Windows 11</button><button data-os="win10">Windows 10</button><button data-os="cros">Chromebook</button>
+        </div>
+        <div class="howto" id="howto"></div>
+      </div></li>
+  </ol>
 
-  <p class="note"><strong>What happens next:</strong> it asks what you're into, builds your first thing with you on the spot, and lines up the rest around you:</p>
-  <ul class="lv">
-    <li><b>MISSION 1</b> Your own page, live on the internet if you choose</li>
-    <li><b>MISSION 3</b> A Discord bot or app your friends actually use</li>
-    <li><b>MISSION 5</b> Something that runs by itself every day</li>
-    <li><b>MISSION 7</b> Tools for real places: a house, a shop, a ranch</li>
+  <div class="kick">WHAT YOU'LL BUILD</div>
+  <h2>Eight missions. You've done one.</h2>
+  <p class="lead">Your coach plans each one around what you're into.</p>
+  <ul class="path">
+    <li class="done"><span class="m">✓</span><span><b>0 · First spark</b><small>Done. You built something by describing it.</small></span></li>
+    <li class="next"><span class="m">🛠️</span><span><b>1 · Your own workshop</b><small>Up next: your first page, live on the internet if you want</small></span></li>
+    <li><span class="m">🔍</span><span><b>2 · Catch it lying</b><small>Prove it works. Find the bug the AI missed.</small></span></li>
+    <li><span class="m">🤖</span><span><b>3 · Plan the big one</b><small>A Discord bot or app your friends actually use</small></span></li>
+    <li><span class="m">🧠</span><span><b>4 · Teach it once</b><small>Your own rules, so it remembers how you work</small></span></li>
+    <li><span class="m">🌙</span><span><b>5 · Runs while you sleep</b><small>Something that works every day without you</small></span></li>
+    <li><span class="m">⚖️</span><span><b>6 · Two brains</b><small>Ask two AIs, decide who's right</small></span></li>
+    <li><span class="m">🏡</span><span><b>7 · Build for someone else</b><small>A real tool for a real house, shop or ranch</small></span></li>
   </ul>
-  <p class="note">There are eight missions in all; the ones between these teach you to test, plan and get a second opinion.</p>
-  <p class="note"><strong>Stuck on setup?</strong> Paste the error into Claude and ask what it means. That isn't cheating; it's the job.</p>
-  <p class="note"><strong>School or work laptop?</strong> It may block the install. If it does, you haven't lost anything: <a href="./#s3" style="color:var(--sun);font-weight:700">keep building in the chat</a>, where everything still works.</p>
-</div>
+
+  <a class="go" href="#top" onclick="window.scrollTo({top:document.querySelector('.steps').offsetTop-90,behavior:'smooth'});return false;">I'm in. Let's set up ↑</a>
+
+  <p class="fine"><b>Stuck on setup?</b> Paste the error into Claude and ask what it means. That isn't cheating; it's the job.</p>
+  <p class="fine"><b>School or work laptop?</b> It may block the install. You haven't lost anything: <a href="./#s3">keep building in the chat</a>, where everything still works.</p>
+</main>
+
+<script>
+(() => {
+  // terminal: plays the first minute once
+  const tb = document.getElementById('tb');
+  const script = [
+    ['p', '~/build-camp-master $ ', 'you', 'claude'],
+    ['you', '> ', 'you', "Let's start."],
+    ['coach', '', 'coach', "Welcome to Build Camp. I'll ask a few quick questions, then we build something that works today."],
+    ['coach', '', 'coach', 'First one: what should I call you?']
+  ];
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const line = (pc, pt, cls) => { const d = document.createElement('span'); d.className = 'ln'; if (pt) { const p = document.createElement('span'); p.className = pc; p.textContent = pt; d.appendChild(p); } const t = document.createElement('span'); t.className = cls; d.appendChild(t); tb.appendChild(d); return t; };
+  const cursor = document.createElement('span'); cursor.className = 'c';
+  if (reduce) { script.forEach(([pc, pt, cls, text]) => { line(pc, pt, cls).textContent = text; }); tb.appendChild(cursor); }
+  else {
+    let i = 0;
+    const next = () => {
+      if (i >= script.length) { tb.lastChild.appendChild(cursor); return; }
+      const [pc, pt, cls, text] = script[i++]; const el = line(pc, pt, cls); el.after(cursor);
+      const fast = cls === 'coach'; let k = 0;
+      const tick = () => { el.textContent = text.slice(0, ++k); if (k < text.length) setTimeout(tick, fast ? 18 : 70); else setTimeout(next, fast ? 650 : 450); };
+      setTimeout(tick, i === 1 ? 1300 : 250);
+    };
+    next();
+  }
+
+  // terminal how-to, picked for their computer
+  const HOW = {
+    mac: '<b>Mac:</b> right-click the folder → <b>New Terminal at Folder</b>.',
+    win11: '<b>Windows 11:</b> right-click the folder → <b>Open in Terminal</b>.',
+    win10: '<b>Windows 10:</b> open the folder, hold <b>Shift</b>, right-click an empty spot → <b>Open PowerShell window here</b>.',
+    cros: '<b>Chromebook:</b> Settings → search "Linux" → turn on the Linux development environment. Use the <b>Terminal</b> app it adds, and the Linux install steps.'
+  };
+  const ua = navigator.userAgent;
+  let guess = /CrOS/.test(ua) ? 'cros' : /Windows NT 10/.test(ua) ? 'win11' : 'mac';
+  const btns = [...document.querySelectorAll('.os button')];
+  const pick = os => { btns.forEach(b => b.classList.toggle('on', b.dataset.os === os)); document.getElementById('howto').innerHTML = HOW[os]; };
+  btns.forEach(b => b.addEventListener('click', () => pick(b.dataset.os)));
+  pick(guess);
+})();
+</script>
 </body>
 </html>
