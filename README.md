@@ -1,5 +1,7 @@
 # Build Camp
 
+### ▶ New here? Start at **[cvp1.github.io/build-camp](https://cvp1.github.io/build-camp/)**. Play first, read later.
+
 **You can build software now by describing it.** Not someday: today, on the laptop you
 already have. The people who learn to direct AI well are building in a weekend what
 used to take a team a month.
