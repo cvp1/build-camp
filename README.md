@@ -44,10 +44,7 @@ how to plan something big, and how to make it remember how you like things done.
 
 ## Ready for the real tools? (Mission 1 onward)
 
-**What this costs.** This kit and Mission 0 are free. Mission 1 onward uses Claude Code,
-which needs a paid Claude plan. The cheapest is Pro: $20 a month, or $17 a month if
-you pay for a year. You'll also need a laptop and about half an hour for setup and
-your first build.
+You'll need a laptop and about half an hour for setup and your first build.
 
 1. **Install Claude Code:** https://code.claude.com/docs/en/overview
    Follow the step for your computer.
