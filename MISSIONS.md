@@ -14,7 +14,13 @@ examples are just examples.
 | 4 | **Teach it once** | Your own `CLAUDE.md` rules and one custom `/skill` | Corrections compound |
 | 5 | **Runs while you sleep** | A scheduled job that does something daily and tells you if it failed | Automate, then watch for silence |
 | 6 | **Two brains** | Same problem given to two models; you judge which answer is right | Second opinions, orchestration |
-| 7 | **Build for someone else** | A tool a real person (not you) uses | Real users break your assumptions |
+| 7 | **Build for someone else** | A tool for a real system someone runs, like a family member's home, farm or shop | Real users and real systems break your assumptions |
+
+## Mission 7: working on someone else's system
+The person whose system it is decides what you get access to, and when. Expect to start
+**read-only**: dashboards, reports, alerts. Earn write access (anything that switches,
+moves or spends something) by showing your read-only tool is solid. Their credentials
+never go in your repo or your chat with Claude.
 
 ## How each mission ends
 1. Demo it (screen share or a 2-minute video).
