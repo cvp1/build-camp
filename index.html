@@ -52,8 +52,6 @@ p strong{color:var(--ink)}
 .card .d{color:var(--dim);font-size:14px;display:block;line-height:1.3}
 .card .go{color:var(--hot);font-weight:800;font-size:22px}
 .card.top{box-shadow:inset 0 0 0 2px var(--hot)}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
-.chip{background:var(--panel);color:var(--ink);font-weight:600;font-size:15px;padding:9px 14px;border-radius:99px;box-shadow:inset 0 0 0 1px var(--line)}
 .levels{list-style:none;padding:0;margin:18px 0;display:grid;gap:10px}
 .levels li{background:var(--panel);border-radius:14px;padding:12px 14px;display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;box-shadow:inset 0 0 0 1px var(--line)}
 .levels .n{font-weight:800;color:var(--sun);font-size:13px;letter-spacing:.1em}
@@ -76,11 +74,45 @@ footer{padding:48px 0 60px;color:var(--dim);font-size:14px;text-align:center}
 .sheet .x{position:absolute;right:14px;top:10px;background:none;color:var(--dim);font-size:22px;padding:8px}
 .toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,80px);background:var(--sun);color:#221a05;font-weight:800;padding:10px 16px;border-radius:99px;transition:transform .25s;z-index:20;white-space:nowrap;font-size:15px}
 .toast.on{transform:translate(-50%,0)}
+.hd{display:flex;justify-content:space-between;align-items:baseline}
+.skip{font-size:13px;font-weight:700;color:var(--dim);text-decoration:none;padding:16px 0 6px}
+.skip b{color:var(--sun)}
+.rail{position:sticky;top:0;z-index:5;background:var(--bg);margin:0 -18px 8px;padding:8px 18px;display:flex;gap:6px}
+.rail a{flex:1;text-align:center;font-size:12px;font-weight:800;color:var(--dim);text-decoration:none;padding:7px 2px;border-radius:99px;box-shadow:inset 0 0 0 1px var(--line);white-space:nowrap}
+.rail a.on{background:var(--hot);color:#1c0d02;box-shadow:none}
+.rail a.done::before{content:"✓ "}
+section{scroll-margin-top:52px}
+.kicker{font-size:12px;font-weight:800;letter-spacing:.18em;color:var(--hot);margin-bottom:10px}
+h3.pick{font-size:22px;font-weight:800;letter-spacing:-.01em;margin-top:30px}
+.next{display:block;width:100%;margin-top:22px}
+.tabs{display:flex;gap:8px;margin-top:14px}
+.tab{flex:1;background:transparent;color:var(--dim);box-shadow:inset 0 0 0 2px var(--line);padding:11px 8px;font-size:15px}
+.tab.on{background:var(--ink);color:#14110f;box-shadow:none}
+.card[hidden]{display:none}
+.after{font-size:14px;margin-top:14px}
+.after a,.back a{color:var(--sun);font-weight:700;text-decoration:none}
+.says{display:grid;gap:10px;margin:18px 0}
+.say{display:flex;align-items:center;gap:10px;background:var(--panel);border-radius:16px 16px 16px 4px;padding:9px 9px 9px 16px;box-shadow:inset 0 0 0 1px var(--line)}
+.say span{flex:1;font-size:17px;color:var(--ink)}
+.say button{padding:9px 14px;font-size:14px;border-radius:10px;min-width:86px}
+.say button.ok{background:var(--sun)}
+.wall{list-style:none;padding:0;margin:16px 0;display:grid;gap:9px}
+.wall li{padding-left:28px;position:relative;color:var(--ink)}
+.wall li::before{content:"✕";position:absolute;left:2px;color:var(--hot);font-weight:800}
+.back{font-size:14px;text-align:center;margin-top:14px}
+.linkbtn{background:none;color:var(--sun);font-size:14px;font-weight:700;padding:6px}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="mark">BUILD CAMP</div>
+  <div class="hd"><div class="mark">BUILD CAMP</div><a class="skip" href="next.html">Already code? <b>Hard mode →</b></a></div>
+  <nav class="rail" id="rail" aria-label="Steps">
+    <a href="#play" data-step="play" class="on">1 Play</a>
+    <a href="#build" data-step="build">2 Build</a>
+    <a href="#boss" data-step="boss">3 Boss it</a>
+    <a href="#big" data-step="big">4 Go big</a>
+  </nav>
+  <div id="play"></div>
   <h1>Dodge the cows.</h1>
   <p class="sub">Hold left or right to steer. It gets faster.</p>
 
@@ -97,63 +129,84 @@ footer{padding:48px 0 60px;color:var(--dim);font-size:14px;text-align:center}
       <div class="hint" id="overBest"></div>
       <div class="row">
         <button id="again">Play again</button>
-        <button id="share" class="ghost">Challenge someone</button>
+        <a class="btn ghost" href="#build">How was this made?</a>
       </div>
-      <a class="more" href="#how">Nobody coded this game. See how ↓</a>
+      <button id="share" class="linkbtn">Challenge someone to beat your score</button>
     </div>
   </div>
 
-  <section id="how">
+  <section id="build">
+    <div class="kicker">STEP 2 · BUILD YOUR OWN</div>
     <h2>Nobody coded that game.</h2>
-    <p>An AI wrote every line. The instructions were plain English, like this:</p>
+    <p>An AI wrote every line. The instructions were plain English:</p>
     <div class="bubble">Make me a game that works on my phone: I'm a truck dodging cows on a desert highway. It speeds up over time. Show my high score.</div>
-    <p><strong>That's the whole skill.</strong> Say what you want, then boss it around until it's right.</p>
-  </section>
+    <p><strong>That's the whole skill.</strong> Say what you want, then boss it around until it's right. <strong>Now you.</strong></p>
 
-  <section id="turn">
-    <h2>Your turn. Five minutes.</h2>
-    <p>Tap one. Claude opens with the instructions already typed in. Hit the <span class="up">↑</span> button and it starts building. Free to try.</p>
+    <h3 class="pick">Pick one. It takes five minutes.</h3>
+    <div class="tabs" role="tablist">
+      <button class="tab on" data-tab="easy" role="tab">Quick wins</button>
+      <button class="tab" data-tab="hard" role="tab">Harder builds</button>
+    </div>
     <div class="cards">
-      <button class="card top" data-prompt="Ask me 3 quick questions about what I'm into, one at a time. Then build me a small game or tool based on my answers that works on my phone.">
+      <button class="card top" data-set="easy" data-prompt="Ask me 3 quick questions about what I'm into, one at a time. Then build me a small game or tool based on my answers that works on my phone.">
         <span class="em">🎲</span><span><span class="t">Surprise me</span><span class="d">It asks what you're into, then builds something for you</span></span><span class="go">›</span>
       </button>
-      <button class="card" data-prompt="Make me a game that works on my phone: I'm a truck dodging cows on a desert highway. Hold left or right to steer, it speeds up over time, show my high score. When it's done, ask me what I want to change.">
+      <button class="card" data-set="easy" data-prompt="Make me a game that works on my phone: I'm a truck dodging cows on a desert highway. Hold left or right to steer, it speeds up over time, show my high score. When it's done, ask me what I want to change.">
         <span class="em">🛻</span><span><span class="t">Remix the cow game</span><span class="d">Build your own version, then change everything</span></span><span class="go">›</span>
       </button>
-      <button class="card" data-prompt="Make a reaction-time test that works on my phone so I can challenge my friends. Big button, five rounds, average time at the end, and a rank from sloth to fighter pilot.">
+      <button class="card" data-set="easy" data-prompt="Make a reaction-time test that works on my phone so I can challenge my friends. Big button, five rounds, average time at the end, and a rank from sloth to fighter pilot.">
         <span class="em">⚡</span><span><span class="t">Reaction test</span><span class="d">Find out which of your friends is slowest</span></span><span class="go">›</span>
       </button>
-      <button class="card" data-prompt="Build me a tool that works on my phone where I enter a used car's price, year and miles and it tells me if it's a good deal, with a color-coded verdict and the reasons why.">
+      <button class="card" data-set="easy" data-prompt="Build me a tool that works on my phone where I enter a used car's price, year and miles and it tells me if it's a good deal, with a color-coded verdict and the reasons why.">
         <span class="em">💸</span><span><span class="t">Good deal or rip-off?</span><span class="d">A used car deal checker</span></span><span class="go">›</span>
       </button>
+      <button class="card top" data-set="hard" hidden data-prompt="I want to build something of my own. Ask me questions one at a time until you understand what I want. Then show me your plan in 3 bullet points, and build it for my phone once I say go.">
+        <span class="em">🧠</span><span><span class="t">Your own idea</span><span class="d">It interviews you, shows a plan, then builds it</span></span><span class="go">›</span>
+      </button>
+      <button class="card" data-set="hard" hidden data-prompt="Make a two-player game we can play on one phone, with each player using one half of the screen. First to 5 points wins. Ask me what kind of game I want before you build it.">
+        <span class="em">🥊</span><span><span class="t">Two-player duel</span><span class="d">One phone, two players, first to five</span></span><span class="go">›</span>
+      </button>
+      <button class="card" data-set="hard" hidden data-prompt="Build a beat maker that works on my phone: a grid of 4 drum sounds by 16 steps, play and stop buttons, a tempo slider and a clear button. Make the sounds in code, with no audio files.">
+        <span class="em">🥁</span><span><span class="t">Beat maker</span><span class="d">A drum machine you can actually play</span></span><span class="go">›</span>
+      </button>
     </div>
+    <p class="after">Tap one. Claude opens with the instructions already typed in. Hit the <span class="up">↑</span> button and it starts building. Free to try.</p>
+    <a class="btn ghost next" href="#boss">Built something? Step 3 ↓</a>
   </section>
 
-  <section>
-    <h2>Then boss it around.</h2>
-    <p>Once it's built, tell it what to change. It rebuilds while you watch.</p>
-    <div class="chips">
-      <button class="chip">make it harder</button>
-      <button class="chip">add a boost button</button>
-      <button class="chip">make it look like an 80s arcade</button>
-      <button class="chip">add a second player</button>
-      <button class="chip">put my name on it</button>
+  <section id="boss">
+    <div class="kicker">STEP 3 · BOSS IT AROUND</div>
+    <h2>Now change it. Just say so.</h2>
+    <p>Go back to your Claude chat and type what you want different. Out of ideas? <strong>Copy one of these and paste it in:</strong></p>
+    <div class="says">
+      <div class="say"><span>make it harder</span><button>Copy</button></div>
+      <div class="say"><span>make it look like an 80s arcade</span><button>Copy</button></div>
+      <div class="say"><span>add a second player</span><button>Copy</button></div>
+      <div class="say"><span>put my name on it</span><button>Copy</button></div>
     </div>
-    <p>If it breaks, tell it what broke. Catching it when it's wrong is half the skill.</p>
+    <p>It rebuilds while you watch. If it breaks, tell it what broke. Catching it when it's wrong is half the skill.</p>
+    <a class="btn ghost next" href="#big">Next: where this gets serious ↓</a>
   </section>
 
-  <section>
-    <h2>That was level zero.</h2>
-    <p>The same skill builds real things.</p>
+  <section id="big">
+    <div class="kicker">STEP 4 · GO BIG</div>
+    <h2>Here's the catch.</h2>
+    <p>What you just built lives inside a chat. It's the toy version.</p>
+    <ul class="wall">
+      <li>It can't be a Discord bot</li>
+      <li>It can't run by itself every morning</li>
+      <li>It can't be a website at your own address</li>
+      <li>It can't work with the files on your computer</li>
+    </ul>
+    <p><strong>The real tools can.</strong> Same skill: say what you want, boss it around. Here's what you'd build:</p>
     <ul class="levels">
-      <li class="done"><span class="n">LVL 0</span><span>A game, built by describing it</span></li>
       <li><span class="n">LVL 1</span><span>Your own website, live on the internet</span></li>
       <li><span class="n">LVL 2</span><span>A Discord bot or app your friends actually use</span></li>
       <li><span class="n">LVL 3</span><span>Something that runs by itself every day</span></li>
       <li><span class="n">LVL 4</span><span>Tools for real places: a house, a shop, a ranch</span></li>
     </ul>
-    <p>Those take a laptop, about 15 minutes of setup, and an AI coach that plans it around what you're into.</p>
-    <p style="margin-top:18px"><a class="btn" href="next.html">Show me level 1 →</a></p>
+    <a class="btn next" href="next.html">Take me to hard mode →</a>
+    <p class="back">Needs a laptop and about 15 minutes. Not yet? <a href="#build">Build another one first ↑</a></p>
   </section>
 
   <footer>Made something? Send it to whoever sent you this.</footer>
@@ -201,7 +254,7 @@ for (let i = 0; i < 9; i++) deco.push({ x: i % 2 ? 8 + Math.random()*24 : W - 32
 function reset(){ t = 0; speed = 230; score = 0; cows = []; pops = []; spawnT = 0.7; truckX = W/2; shake = 0; }
 function start(){ reset(); state = 'play'; $('ovStart').hidden = true; $('ovOver').hidden = true; }
 function crash(){
-  state = 'over'; shake = 0.45;
+  state = 'over'; shake = 0.45; if (window.__mark) window.__mark('play');
   const s = Math.floor(score), isBest = s > best;
   if (isBest) { best = s; store.set('bc_best', String(s)); }
   $('overScore').textContent = s.toLocaleString();
@@ -337,9 +390,46 @@ document.querySelectorAll('.card').forEach(b => b.addEventListener('click', asyn
   sheet.classList.add('on');
 }));
 $('sheetX').addEventListener('click', () => sheet.classList.remove('on'));
-document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', async () => {
-  toast(await copy(c.textContent) ? 'Copied. Paste it to Claude.' : 'Type that to Claude');
+// progress rail
+const railLinks = [...document.querySelectorAll('#rail a')];
+let done = []; try { done = JSON.parse(store.get('bc_done') || '[]'); } catch(e){}
+const paint = () => railLinks.forEach(a => a.classList.toggle('done', done.includes(a.dataset.step)));
+function mark(step){ if (!done.includes(step)) { done.push(step); store.set('bc_done', JSON.stringify(done)); paint(); } }
+paint(); window.__mark = mark;
+const anchors = railLinks.map(a => document.getElementById(a.dataset.step));
+function spy(){
+  let cur = 0; anchors.forEach((el, i) => { if (el.getBoundingClientRect().top <= 140) cur = i; });
+  if (innerHeight + scrollY >= document.documentElement.scrollHeight - 4) cur = anchors.length - 1;
+  railLinks.forEach((a, i) => a.classList.toggle('on', i === cur));
+}
+addEventListener('scroll', spy, { passive: true }); spy();
+
+// quick wins / harder builds
+document.querySelectorAll('.tab').forEach(tb => tb.addEventListener('click', () => {
+  document.querySelectorAll('.tab').forEach(x => x.classList.toggle('on', x === tb));
+  document.querySelectorAll('.card').forEach(c => { c.hidden = c.dataset.set !== tb.dataset.tab; });
 }));
+
+// leaving for Claude, and coming back
+let away = false;
+$('sheetGo').addEventListener('click', () => { mark('build'); away = true; });
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState !== 'visible' || !away) return;
+  away = false; sheet.classList.remove('on');
+  document.getElementById('boss').scrollIntoView({ behavior: 'smooth' });
+  toast('Welcome back. Step 3: change it.');
+});
+
+// step 3 copy rows
+document.querySelectorAll('.say').forEach(row => {
+  const btn = row.querySelector('button');
+  btn.addEventListener('click', async () => {
+    const ok = await copy(row.querySelector('span').textContent);
+    btn.textContent = ok ? 'Copied ✓' : 'Type it'; btn.classList.add('ok'); mark('boss');
+    toast(ok ? 'Copied. Paste it in your Claude chat.' : 'Type that into your Claude chat');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('ok'); }, 2500);
+  });
+});
 
 window.__game = { get state(){ return state; }, get score(){ return Math.floor(score); }, get cows(){ return cows.length; }, get truckX(){ return truckX; } };
 })();
